@@ -4,6 +4,7 @@
 #include "simple_logger.h"
 #include "entity.h"
 #include "gf2d_vector.h"
+#include "player.h"
 
 int main(int argc, char * argv[])
 {
@@ -47,7 +48,7 @@ int main(int argc, char * argv[])
 	else {
 		player->position = vector2d(200, 310);
 		player->scale = vector2d(0.2, 20);
-		player->sprite = mouse = gf2d_sprite_load_all("images/space_bug.png", 128, 128, 16);
+		player->sprite = mouse = gf2d_sprite_load_all("images/space_bug.png", 128, 128, 16); //if connected to mouse, add = mouse =
 		player->current_frame = 0;
 		player->frame_num = 16;
 	}

@@ -21,8 +21,7 @@ void entity_manager_close() {
 	}
 	if (entityManager.entity) { //If there's a list of entities, kill it!
 		free(entityManager.entity);
-	}
-	entityManager.maxEntities = 0;
+	}	entityManager.maxEntities = 0;
 	entityManager.entity = NULL;
 }
 
