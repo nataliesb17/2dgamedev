@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "entity.h"
 #include "simple_logger.h"
 #include "gf2d_sprite.h"
@@ -97,13 +98,13 @@ void drawEntity(Entity*entity) {
 		return;
 	}
 	gf2d_sprite_draw(
-		entity->sprite,       //sprite
-		entity->position,     //position
-		&entity->scale,       //scale
-		NULL,                 //scaleCenterPoint
-		NULL,                 //rotation
-		NULL,                 //flip
-		NULL,                 //colorShift
+		entity->sprite,           //sprite
+		entity->position,         //position
+		&entity->scale,           //scale
+		NULL,                     //scaleCenterPoint
+		NULL,                     //rotation
+		NULL,                     //flip
+		NULL,                     //colorShift
 		entity->current_frame);   //frames
 }
 /* Draw Entity
@@ -112,11 +113,12 @@ void drawEntity(Entity*entity) {
 *@return - nothing
 */
 
-void Update(Entity*entity) {
+void update(Entity*entity) {
 	if ((!entity) || (!entity->inUse))return;
 	entity->current_frame += 0.35;
 	if (entity->current_frame > entity->frame_num)entity->current_frame = 0;
-	//if (entity->update)entity->update(entity);
+	vector2d_add(entity->position, entity->position, entity->velocity);
+	if (entity->update)entity->update(entity);
 }
 /* Update for Animation
 *@brief - updates entity if animation is present

@@ -38,9 +38,10 @@ int main(int argc, char * argv[])
     /*demo setup*/
     sprite = gf2d_sprite_load_image("images/backgrounds/bg_flat.png");
     mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
+	player = newPlayer(vector2d(1000, 0), player);
 
 	/*create entity(player)*/
-	player = ent_new();
+	/*player = ent_new();
 	if (!player) {
 		slog("unable to draw player");
 		return;
@@ -48,11 +49,11 @@ int main(int argc, char * argv[])
 	else {
 		player->position = vector2d(200, 310);
 		player->scale = vector2d(0.2, 20);
-		player->sprite = mouse = gf2d_sprite_load_all("images/space_bug.png", 128, 128, 16); //if connected to mouse, add = mouse =
+		player->sprite = gf2d_sprite_load_all("images/space_bug.png", 128, 128, 16); //if connected to mouse, add = mouse =
 		player->current_frame = 0;
 		player->frame_num = 16;
 	}
-
+	*/
     /*main game loop*/
     while(!done)
     {
@@ -69,7 +70,7 @@ int main(int argc, char * argv[])
             //backgrounds drawn first
             gf2d_sprite_draw_image(sprite,vector2d(0,0));
 			drawEntity(player);
-			Update(player);
+			update(player);
             
             //UI elements last
             gf2d_sprite_draw(

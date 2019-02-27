@@ -9,10 +9,13 @@ typedef struct entities {
 
 	Vector2D position;
 	Vector2D scale;
+	Vector2D velocity;
 	Sprite *sprite;
 
 	float current_frame;
 	int frame_num;
+
+	void(*update)(struct entities * entity);
 
 }Entity;
 
@@ -45,7 +48,7 @@ void drawEntity(Entity*entity);
 *@return - nothing
 */
 
-void Update(Entity*entity);
+void update(Entity *ent);
 /* Update for Animation
 *@brief - updates entity if animation is present
 *@parameter - entity
