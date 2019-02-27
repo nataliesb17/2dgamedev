@@ -16,8 +16,8 @@ Entity *newPlayer(Vector2D position)
 	}
 	vector2d_copy(entity->position, position);
 
-	entity->sprite = gf2d_sprite_load_all("images/space_bug.png", 128, 128, 16); //this is the player sprite
-	entity->frame_num = 48;
+	entity->sprite = gf2d_sprite_load_all("images/player_sheet.png", 50, 50, 5); //this is the player sprite
+	entity->frame_num = 5;
 	entity->update = player_update;
 	return entity;
 

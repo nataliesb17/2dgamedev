@@ -23,11 +23,11 @@ int main(int argc, char * argv[])
     init_logger("gf2d.log");
     slog("---==== BEGIN ====---");
     gf2d_graphics_initialize(
-        "gf2d",
-        1200,
-        720,
-        1200,
-        720,
+        "Eli the Elemental Tulip",
+        640,
+        480,
+        640,
+        480,
         vector4d(0,0,0,255),
         0);
     gf2d_graphics_set_frame_delay(16);
@@ -36,7 +36,7 @@ int main(int argc, char * argv[])
     SDL_ShowCursor(SDL_DISABLE);
     
     /*demo setup*/
-    sprite = gf2d_sprite_load_image("images/backgrounds/bg_flat.png");
+    sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
     mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
 	player = newPlayer(vector2d(1000, 0), player);
 

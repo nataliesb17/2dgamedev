@@ -63,6 +63,9 @@ void gf2d_graphics_initialize(
             flags |= SDL_WINDOW_FULLSCREEN;
         }
     }
+	else {
+		flags |= SDL_WINDOW_RESIZABLE;
+	}
     gf2d_graphics.main_window = SDL_CreateWindow(windowName,
                              SDL_WINDOWPOS_UNDEFINED,
                              SDL_WINDOWPOS_UNDEFINED,
