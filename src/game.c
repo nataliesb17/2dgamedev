@@ -5,6 +5,7 @@
 #include "entity.h"
 #include "gf2d_vector.h"
 #include "player.h"
+#include "tiles.h"
 
 int main(int argc, char * argv[])
 {
@@ -13,11 +14,12 @@ int main(int argc, char * argv[])
     const Uint8 * keys;
     Sprite *sprite;
 	Entity *player;
+	Entity *tiles;
     
     int mx,my;
     float mf = 0;
     Sprite *mouse;
-    Vector4D mouseColor = {255,100,255,200};
+    Vector4D mouseColor = {39,135,27,255};
     
     /*program initializtion*/
     init_logger("gf2d.log");
@@ -38,7 +40,8 @@ int main(int argc, char * argv[])
     /*demo setup*/
     sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
     mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
-	player = newPlayer(vector2d(1000, 0), player);
+	player = newPlayer(vector2d(0, 0), player);
+	tiles = newTile(vector2d(10, 10), tiles); //sets up tiles
 
 	/*create entity(player)*/
 	/*player = ent_new();
@@ -70,6 +73,7 @@ int main(int argc, char * argv[])
             //backgrounds drawn first
             gf2d_sprite_draw_image(sprite,vector2d(0,0));
 			drawEntity(player);
+			drawEntity(tiles); //draws the tiles hopefully
 			update(player);
             
             //UI elements last
@@ -86,6 +90,9 @@ int main(int argc, char * argv[])
         
         if (keys[SDL_SCANCODE_ESCAPE])done = 1; // exit condition
         slog("Rendering at %f FPS",gf2d_graphics_get_frames_per_second());
+
+
+
     }
     slog("---==== END ====---");
     return 0;
