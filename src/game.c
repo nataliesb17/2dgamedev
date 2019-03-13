@@ -5,7 +5,6 @@
 #include "entity.h"
 #include "gf2d_vector.h"
 #include "player.h"
-#include "tiles.h"
 
 int main(int argc, char * argv[])
 {
@@ -14,7 +13,6 @@ int main(int argc, char * argv[])
     const Uint8 * keys;
     Sprite *sprite;
 	Entity *player;
-	Entity *tiles;
     
     int mx,my;
     float mf = 0;
@@ -41,7 +39,7 @@ int main(int argc, char * argv[])
     sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
     mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
 	player = newPlayer(vector2d(0, 0), player);
-	tiles = newTile(vector2d(10, 10), tiles); //sets up tiles
+	//tiles = newTile(vector2d(10, 10), tiles); //sets up tiles
 
 	/*create entity(player)*/
 	/*player = ent_new();
@@ -73,7 +71,6 @@ int main(int argc, char * argv[])
             //backgrounds drawn first
             gf2d_sprite_draw_image(sprite,vector2d(0,0));
 			drawEntity(player);
-			drawEntity(tiles); //draws the tiles hopefully
 			update(player);
             
             //UI elements last

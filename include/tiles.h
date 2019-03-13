@@ -5,11 +5,8 @@
 #include "entity.h"
 #include "gf2d_vector.h"
 
-Entity *newTile(Vector2D position);
-/**
-* @brief this spawns a new tile
-* @param position
-* @return pointer for the tile
-*/
+void Slock(SDL_Surface *screen);
+
+void Sulock(SDL_Surface *screen);
 
 #endif
