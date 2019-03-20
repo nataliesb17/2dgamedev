@@ -6,6 +6,7 @@
 #include "gf2d_draw.h"
 #include <stdio.h>
 #include <string.h>
+#include "collision.h"
 
 TileMap *tilemap_load(char *filename)
 {
