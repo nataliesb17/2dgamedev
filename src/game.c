@@ -5,6 +5,7 @@
 #include "entity.h"
 #include "gf2d_vector.h"
 #include "player.h"
+#include "level_build.h"
 
 int main(int argc, char * argv[])
 {
@@ -13,11 +14,13 @@ int main(int argc, char * argv[])
     const Uint8 * keys;
     Sprite *sprite;
 	Entity *player;
+	//TileMap *map;
     
     int mx,my;
     float mf = 0;
     Sprite *mouse;
     Vector4D mouseColor = {39,135,27,255};
+	//static Vector2D path[2];
     
     /*program initializtion*/
     init_logger("gf2d.log");
@@ -39,6 +42,9 @@ int main(int argc, char * argv[])
     sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
     mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
 	player = newPlayer(vector2d(0, 0), player);
+	//map = tilemap_load("levels/tilemap.map");
+	//vector2d_copy(path[0], map->start);
+	//vector2d_copy(path[1], map->end);
 	//tiles = newTile(vector2d(10, 10), tiles); //sets up tiles
 
 	/*create entity(player)*/
@@ -72,7 +78,8 @@ int main(int argc, char * argv[])
             gf2d_sprite_draw_image(sprite,vector2d(0,0));
 			drawEntity(player);
 			update(player);
-            
+			//tilemap_draw(map, vector2d(86, 24));
+			//tilemap_draw_path(path, 2, map, vector2d(86, 24));
             //UI elements last
             gf2d_sprite_draw(
                 mouse,

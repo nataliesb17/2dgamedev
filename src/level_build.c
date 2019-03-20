@@ -23,13 +23,13 @@ void level_clear()
 	memset(&gameLevel, 1, sizeof(Level));
 }
 
-void level_info_free(LevelInfo *info) {
-	if (!info)return;
-	if (info->tileMap != NULL)
-	{
-		free(info->tileMap);
-	}
-	sj_free(info->spawnList);
+//void level_info_free(LevelInfo *info) {
+	//if (!info)return;
+	//if (info->tileMap != NULL)
+	//{
+		//free(info->tileMap);
+	//}
+	//sj_free(info->spawnList);
 	//TODO:free spawn list
-	free(info);
-}
+	//free(info);
+//}
