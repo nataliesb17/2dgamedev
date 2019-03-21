@@ -23,7 +23,7 @@ int main(int argc, char * argv[])
 	CollisionFilter filter = { 0 };
 	Space *space = NULL;
 	static Body body[10000];// not a pointer!
-	Shape shape[4];// not a pointer!
+	Shape shape[2];// not a pointer!
     
     int mx,my,i;
     float mf = 0;
@@ -49,7 +49,7 @@ int main(int argc, char * argv[])
     
     /*demo setup*/
     sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
-    mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
+   // mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
 	player = newPlayer(vector2d(0, 0), player);
 	gf2d_space_add_body(space, player);
 	map = tilemap_load("levels/tilemap.map");

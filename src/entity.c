@@ -107,7 +107,7 @@ void drawEntity(Entity*entity) {
 		NULL,                     //colorShift
 		entity->current_frame);   //frames
 	if (&entity->hitbox)
-		gf2d_shape_draw(entity->hitbox, gf2d_color(0,255,0,255), vector2d(0,0));
+		gf2d_shape_draw(entity->hitbox, gf2d_color(255,0,255,255), vector2d(0,0));
 }
 /* Draw Entity
 *@brief - draws the entity

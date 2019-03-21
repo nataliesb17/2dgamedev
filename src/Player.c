@@ -2,7 +2,6 @@
 #include "simple_logger.h"
 #include "entity.h"
 #include "collision.h"
-#include "gf2d_shape.h"
 
 void player_update(Entity *self);
 void bodyTouch(struct Body_s *self, List *collision) {
@@ -22,7 +21,7 @@ Entity *newPlayer(Vector2D position)
 	}
 	vector2d_copy(entity->position, position);
 
-	entity->sprite = gf2d_sprite_load_all("images/player_sheet.png", 50, 50, 5); //this is the player sprite
+	entity->sprite = gf2d_sprite_load_all("images/player_sheet.png", 64, 64, 5); //this is the player sprite
 	entity->frame_num = 5;
 	entity->update = player_update;
 	entity->hitbox = (&entity->hitbox, gf2d_shape_rect(position.x, position.y, 20, 20));
@@ -68,7 +67,9 @@ Entity *newPlayer(Vector2D position)
 
 }
 
-void player_update(Entity *self) {
+
+
+void player_update(Entity *self, Space *space) {
 	const Uint8 *keys;
 	keys = SDL_GetKeyboardState(NULL);
 	if (keys[SDL_SCANCODE_W])self->position.y -= 1;
@@ -78,6 +79,10 @@ void player_update(Entity *self) {
 
 	self->hitbox.s.c.x = self->position.x + 20;
 	self->hitbox.s.c.y = self->position.y + 25;
+
+	//self->velocity = vector2d(0, 2); //gravity
+
+	//Collision touchBody = gf2d_space_shape_test(space,self->hitbox);
 
 }
 
