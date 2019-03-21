@@ -51,6 +51,7 @@ int main(int argc, char * argv[])
     sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
     mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
 	player = newPlayer(vector2d(0, 0), player);
+	gf2d_space_add_body(space, player);
 	map = tilemap_load("levels/tilemap.map");
 	vector2d_copy(path[0],map->start);
 	vector2d_copy(path[1],map->end);
@@ -65,13 +66,15 @@ int main(int argc, char * argv[])
 		1,
 		20);
 
-	//shape[1] = gf2d_shape_circle(0, 0, 10);
+	shape[1] = gf2d_shape_circle(0, 0, 10);
 	//shape[2] = gf2d_shape_circle(10, 0, 15);
 	//shape[3] = gf2d_shape_rect(-32, -32, 64, 64);
 	//shape[0] = gf2d_shape_rect(-16, -16, 32, 32);
 
 	//gf2d_space_add_static_shape(space, gf2d_shape_rect(200, 500, 512, 32));
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(100, 450, 550, 30));
+	
+
 	/* Stress test*/
 	gf2d_body_set(
 		&body[0],

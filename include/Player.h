@@ -4,6 +4,8 @@
 #include "gf2d_sprite.h"
 #include "entity.h"
 #include "gf2d_vector.h"
+#include "gf2d_body.h"
+#include "gf2d_shape.h"
 
 Entity *newPlayer(Vector2D position);
 /**
@@ -11,4 +13,6 @@ Entity *newPlayer(Vector2D position);
 * @param position
 * @return pointer for the player
 */
+
+
 #endif

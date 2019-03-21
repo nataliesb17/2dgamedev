@@ -3,6 +3,7 @@
 #include "gf2d_draw.h"
 #include <stdlib.h>
 
+
 Collision *gf2d_collision_new()
 {
 	Collision *collision = NULL;
@@ -75,6 +76,7 @@ List *gf2d_collision_check_space_shape(Space *space, Shape shape, CollisionFilte
 			collision = gf2d_collision_space_static_shape_clip(shape, staticShape);
 			if (collision == NULL)continue;
 			collisionList = gf2d_list_append(collisionList, (void*)collision);
+			
 		}
 		//check if the shape clips the level bounds
 		/*        collision = gf2d_dynamic_body_bounds_collision_check(db,space->bounds,t);
@@ -118,6 +120,7 @@ Collision gf2d_collision_trace_space(Space *space, Vector2D start, Vector2D end,
 		{
 			best = collision;
 			bestDistance = distance;
+			
 		}
 	}
 	if (best != NULL)
@@ -136,3 +139,4 @@ Collision gf2d_collision_trace_space(Space *space, Vector2D start, Vector2D end,
 	gf2d_collision_list_free(collisionList);
 	return out;
 }
+

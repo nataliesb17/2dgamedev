@@ -72,5 +72,9 @@ List *gf2d_collision_check_space_shape(Space *space, Shape shape, CollisionFilte
 */
 Collision gf2d_collision_trace_space(Space *space, Vector2D start, Vector2D end, CollisionFilter filter);
 
+Collision gf2d_space_shape_test(Space *space, Shape shape);
+
+Collision gf2d_space_shape_test_filter(Space *space, Shape shape, CollisionFilter filter);
+
 
 #endif

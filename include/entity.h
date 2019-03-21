@@ -2,6 +2,8 @@
 #define Entity_h
 #include "gf2d_vector.h"
 #include "gf2d_sprite.h"
+#include "gf2d_body.h"
+#include "gf2d_shape.h"
 
 typedef struct entities {
 
@@ -11,6 +13,8 @@ typedef struct entities {
 	Vector2D scale;
 	Vector2D velocity;
 	Sprite *sprite;
+	Shape hitbox; 
+	Body rigidBody;
 
 	float current_frame;
 	int frame_num;
