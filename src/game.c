@@ -7,7 +7,6 @@
 #include "player.h"
 #include "level_build.h"
 #include "gf2d_draw.h"
-#include "gf2d_space.h"
 #include "collision.h"
 
 int main(int argc, char * argv[])
@@ -20,7 +19,6 @@ int main(int argc, char * argv[])
 	TileMap *map;
 
 	Collision collision;
-	CollisionFilter filter = { 0 };
 	Space *space = NULL;
 	static Body body[10000];// not a pointer!
 	Shape shape[2];// not a pointer!
@@ -72,46 +70,7 @@ int main(int argc, char * argv[])
 	//shape[0] = gf2d_shape_rect(-16, -16, 32, 32);
 
 	//gf2d_space_add_static_shape(space, gf2d_shape_rect(200, 500, 512, 32));
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(100, 450, 550, 30));
-	
-
-	/* Stress test*/
-	gf2d_body_set(
-		&body[0],
-		"body",
-		1,
-		0,
-		0,
-		0,
-		vector2d(256, 256),
-		vector2d(2.3, 4.4),
-		10,
-		1,
-		1,  //elasticity
-		&shape[0],
-		NULL,
-		NULL);
-	gf2d_space_add_body(space, &body[0]);
-	for (i = 1; i < 100; i++)
-	{
-		gf2d_body_set(
-			&body[i],
-			"body",
-			1,
-			0,
-			0,
-			0,
-			vector2d(256 + 128, 256 + 128),
-			vector2d(2.5 * gf2d_crandom(), 3 * gf2d_crandom()),
-			10,
-			1,
-			1,  //elasticity
-			&shape[i % 2],
-			NULL,
-			NULL);
-		gf2d_space_add_body(space, &body[i]);
-	}
-
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(0, 450, 550, 30));
 	//tiles = newTile(vector2d(10, 10), tiles); //sets up tiles
 
 	
@@ -134,22 +93,10 @@ int main(int argc, char * argv[])
             //backgrounds drawn first
             gf2d_sprite_draw_image(sprite,vector2d(0,0));
 			drawEntity(player);
-			update(player);
+			player_update(player,space);
 			tilemap_draw(map, vector2d(86, 24));
 			//tilemap_draw_path(path, 2, map, vector2d(86, 24));
 			gf2d_space_update(space);
-
-			//test for line intersect check
-			collision = gf2d_collision_trace_space(space, vector2d(mx, my), vector2d(600, 360), filter);
-			if (collision.collided)
-			{
-				gf2d_draw_line(vector2d(mx, my), collision.pointOfContact, vector4d(255, 0, 0, 255));
-			}
-			else
-			{
-				gf2d_draw_line(vector2d(mx, my), vector2d(600, 360), vector4d(255, 255, 0, 255));
-			}
-
 
 			gf2d_space_draw(space, vector2d(0, 0));
 			//UI elements last
