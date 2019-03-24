@@ -8,6 +8,7 @@
 #include "level_build.h"
 #include "gf2d_draw.h"
 #include "collision.h"
+#include "enemy.h"
 
 int main(int argc, char * argv[])
 {
@@ -16,7 +17,9 @@ int main(int argc, char * argv[])
     const Uint8 * keys;
     Sprite *sprite;
 	Entity *player;
+	Entity *enemy;
 	TileMap *map;
+	int playerHealth = 20;
 
 	Collision collision;
 	Space *space = NULL;
@@ -49,6 +52,7 @@ int main(int argc, char * argv[])
     sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
    // mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
 	player = newPlayer(vector2d(0, 0), player);
+	enemy = newEnemy(vector2d(200, 200), enemy);
 	gf2d_space_add_body(space, player);
 	map = tilemap_load("levels/tilemap.map");
 	vector2d_copy(path[0],map->start);
@@ -71,6 +75,7 @@ int main(int argc, char * argv[])
 
 	//gf2d_space_add_static_shape(space, gf2d_shape_rect(200, 500, 512, 32));
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(0, 450, 550, 30));
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(220, 335, 155, 30));
 	//tiles = newTile(vector2d(10, 10), tiles); //sets up tiles
 
 	
@@ -93,6 +98,7 @@ int main(int argc, char * argv[])
             //backgrounds drawn first
             gf2d_sprite_draw_image(sprite,vector2d(0,0));
 			drawEntity(player);
+			drawEntity(enemy);
 			player_update(player,space);
 			tilemap_draw(map, vector2d(86, 24));
 			//tilemap_draw_path(path, 2, map, vector2d(86, 24));

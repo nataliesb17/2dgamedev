@@ -3,7 +3,7 @@
 #include "entity.h"
 #include "collision.h"
 
-void player_update(Entity *self);
+void player_update(Entity *self, Space *space);
 
 
 Entity *newPlayer(Vector2D position)
@@ -33,12 +33,12 @@ void player_update(Entity *self, Space *space) {
 	const Uint8 *keys;
 	keys = SDL_GetKeyboardState(NULL);
 
-	vector2d_add(self->position, self->position, self->velocity);
-
 	if (keys[SDL_SCANCODE_W])self->velocity.y -= .75;
 	if (keys[SDL_SCANCODE_A])self->velocity.x -= .75;
 	if (keys[SDL_SCANCODE_S])self->velocity.y += .75;
 	if (keys[SDL_SCANCODE_D])self->velocity.x += .75;
+
+	vector2d_add(self->position, self->position, self->velocity);
 
 	self->hitbox.s.c.x = self->position.x + 20;
 	self->hitbox.s.c.y = self->position.y + 25;
