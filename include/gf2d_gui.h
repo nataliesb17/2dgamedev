@@ -8,3 +8,5 @@ void gui_set_energy(float energy);
 void gui_set_opponent_health(float health);
 
 #endif
+
+/*eol@eof*/

@@ -14,7 +14,7 @@ Entity *newEnemy(Vector2D position)
 	entity = ent_new();
 
 	if (!entity) {
-		slog("can't determine the new player entity");
+		slog("can't determine the new enemy entity");
 		return NULL;
 	}
 	vector2d_copy(entity->position, position);

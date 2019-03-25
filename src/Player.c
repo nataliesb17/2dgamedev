@@ -22,21 +22,23 @@ Entity *newPlayer(Vector2D position)
 	entity->sprite = gf2d_sprite_load_all("images/player_sheet.png", 64, 64, 5); //this is the player sprite
 	entity->frame_num = 5;
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
+	entity->onGround = 0;
 	//entity->update = player_update;
 	return entity;
 
 }
 
 
-
 void player_update(Entity *self, Space *space) {
 	const Uint8 *keys;
 	keys = SDL_GetKeyboardState(NULL);
 
-	if (keys[SDL_SCANCODE_W])self->velocity.y -= .75;
-	if (keys[SDL_SCANCODE_A])self->velocity.x -= .75;
-	if (keys[SDL_SCANCODE_S])self->velocity.y += .75;
-	if (keys[SDL_SCANCODE_D])self->velocity.x += .75;
+	if (keys[SDL_SCANCODE_W])self->velocity.y -= .75; //up
+	if (keys[SDL_SCANCODE_A])self->velocity.x -= .75; //left
+	if (keys[SDL_SCANCODE_S] && self->onGround == 0)self->velocity.y += .75; //down, doesn't work if on ground
+	if (keys[SDL_SCANCODE_D])self->velocity.x += .75; //right
+	if (keys[SDL_SCANCODE_Z] && keys[SDL_SCANCODE_D])self->velocity.x += 4; //air dash right
+	if (keys[SDL_SCANCODE_Z] && keys[SDL_SCANCODE_A])self->velocity.x -= 4; //air dash left
 
 	vector2d_add(self->position, self->position, self->velocity);
 
@@ -48,13 +50,16 @@ void player_update(Entity *self, Space *space) {
 	Collision staticHit = gf2d_space_shape_test(space, self->hitbox);
 	if (staticHit.collided >= 1) {
 		slog("collision detected");
-		self->velocity = vector2d(0, 0); //stops movement, but altogether
+		self->onGround = 1;
+		self->velocity = vector2d(0, 0); 
 	}
 	else {
 		self->velocity = vector2d(0, .75);
+		self->onGround = 0;
 	}
 
-
+	slog("Position: %x, %y",self->velocity.x,self->velocity.y);
+	
 }
 
 

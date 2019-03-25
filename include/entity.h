@@ -18,6 +18,8 @@ typedef struct entities {
 
 	float current_frame;
 	int frame_num;
+	int onGround;
+	int ability;
 
 	void(*update)(struct entities * entity);
 
@@ -58,8 +60,6 @@ void update(Entity *ent);
 *@parameter - entity
 *@return - nothing
 */
-
-
 
 //end of code
 
