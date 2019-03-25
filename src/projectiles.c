@@ -97,10 +97,8 @@ Entity *newEarthProjectile(Vector2D position)
 
 
 
-void projectile_update(Entity *projectile, Space *space) {
-	ClipFilter filter; filter.layer = 1; filter.team = 1;
-	Collision bodyHit;
-	gf2d_space_body_collision_test_filter(space, projectile->hitbox, &bodyHit, filter);
+void projectile_update(Entity *projectile, Space *entity) {
+	Collision bodyHit = gf2d_space_shape_test(entity, projectile->hitbox);
 	if (bodyHit.collided >= 1) {
 		slog("picked detected");
 	}

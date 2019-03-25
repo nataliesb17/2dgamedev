@@ -33,7 +33,7 @@ void player_update(Entity *self, Space *space) {
 	const Uint8 *keys;
 	keys = SDL_GetKeyboardState(NULL);
 
-	if (keys[SDL_SCANCODE_W])self->velocity.y -= .75; //up
+	if (keys[SDL_SCANCODE_W])self->velocity.y -= 3; //up
 	if (keys[SDL_SCANCODE_A])self->velocity.x -= .75; //left
 	if (keys[SDL_SCANCODE_S] && self->onGround == 0)self->velocity.y += .75; //down, doesn't work if on ground
 	if (keys[SDL_SCANCODE_D])self->velocity.x += .75; //right
@@ -49,6 +49,9 @@ void player_update(Entity *self, Space *space) {
 
 	Collision staticHit = gf2d_space_shape_test(space, self->hitbox);
 	if (staticHit.collided >= 1) {
+		if (space == "fireBall") {
+			slog("pickup detected");
+		}
 		slog("collision detected");
 		self->onGround = 1;
 		self->velocity = vector2d(0, 0); 

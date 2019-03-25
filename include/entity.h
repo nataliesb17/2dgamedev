@@ -15,6 +15,7 @@ typedef struct entities {
 	Sprite *sprite;
 	Shape hitbox; 
 	Body rigidBody;
+	Space *space;
 
 	float current_frame;
 	int frame_num;
