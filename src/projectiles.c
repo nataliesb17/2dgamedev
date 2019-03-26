@@ -4,92 +4,103 @@
 #include "collision.h"
 #include "player.h"
 
-void projectile_update(Entity *self, Entity *player);
+void pickup_update(Entity *self, Entity *player);
+
+//Elemental Ability Numbers
+
+//Earth = 1
+//Air   = 2
+//Fire  = 3
+//Water = 4
 
 
-Entity *newFireProjectile(Vector2D position) //fire element
+Entity *newFirepickup(Vector2D position) //fire element
 {
 	Entity *entity = NULL;
 	int i;
-	int elementalAbility = 3;
 
 	entity = ent_new();
 
 	if (!entity) {
-		slog("can't determine the new projectile entity");
+		slog("can't determine the new pickup entity");
 		return NULL;
 	}
 	vector2d_copy(entity->position, position);
 
-	entity->sprite = gf2d_sprite_load_all("images/fire_ball.png", 32, 32, 1); //this is the projectile sprite
+	entity->sprite = gf2d_sprite_load_all("images/fire_ball.png", 32, 32, 1); //this is the pickup sprite
 	entity->frame_num = 5;
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
+	entity->hitbox.id = 2;
+	entity->hitbox.ability = 3;
 	//entity->update = player_update;
 	return entity;
 
 }
 
-Entity *newWaterProjectile(Vector2D position) //water element
+Entity *newWaterpickup(Vector2D position) //water element
 {
 	Entity *entity = NULL;
 	int i;
-	int elementalAbility = 2;
 
 	entity = ent_new();
 
 	if (!entity) {
-		slog("can't determine the new projectile entity");
+		slog("can't determine the new pickup entity");
 		return NULL;
 	}
 	vector2d_copy(entity->position, position);
 
-	entity->sprite = gf2d_sprite_load_all("images/water_ball.png", 32, 32, 1); //this is the projectile sprite
+	entity->sprite = gf2d_sprite_load_all("images/water_ball.png", 32, 32, 1); //this is the pickup sprite
 	entity->frame_num = 5;
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
+	entity->hitbox.id = 2;
+	entity->hitbox.ability = 4;
 	//entity->update = player_update;
 	return entity;
 
 }
 
-Entity *newAirProjectile(Vector2D position) 
+Entity *newAirpickup(Vector2D position) 
 {
 	Entity *entity = NULL;
 	int i;
-	int elementalAbility = 1;
 
 	entity = ent_new();
 
 	if (!entity) {
-		slog("can't determine the new projectile entity");
+		slog("can't determine the new pickup entity");
 		return NULL;
 	}
 	vector2d_copy(entity->position, position);
 
-	entity->sprite = gf2d_sprite_load_all("images/air_ball.png", 32, 32, 1); //this is the projectile sprite
+	entity->sprite = gf2d_sprite_load_all("images/air_ball.png", 32, 32, 1); //this is the pickup sprite
 	entity->frame_num = 5;
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
+	entity->hitbox.id = 2;
+	entity->hitbox.ability = 2;
 	//entity->update = player_update;
 	return entity;
 
 }
 
-Entity *newEarthProjectile(Vector2D position) 
+Entity *newEarthpickup(Vector2D position) 
 {
 	Entity *entity = NULL;
 	int i;
-	int elementalAbility = 4;
 
 	entity = ent_new();
 
 	if (!entity) {
-		slog("can't determine the new projectile entity");
+		slog("can't determine the new pickup entity");
 		return NULL;
 	}
 	vector2d_copy(entity->position, position);
 
-	entity->sprite = gf2d_sprite_load_all("images/earth_ball.png", 32, 32, 1); //this is the projectile sprite
+	entity->sprite = gf2d_sprite_load_all("images/earth_ball.png", 32, 32, 1); //this is the pickup sprite
 	entity->frame_num = 5;
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
+	entity->hitbox.id = 2;
+	entity->hitbox.ability = 1;
 	//entity->update = player_update;
 	return entity;
 
@@ -97,9 +108,9 @@ Entity *newEarthProjectile(Vector2D position)
 
 
 
-void projectile_update(Entity *projectile, Space *entity) {
-	Collision bodyHit = gf2d_space_shape_test(entity, projectile->hitbox);
+void pickup_update(Entity *pickup, Space *entity) {
+	Collision bodyHit = gf2d_space_shape_test(entity, pickup->hitbox);
 	if (bodyHit.collided >= 1) {
-		slog("picked detected");
+		slog("pickup detected");
 	}
 }

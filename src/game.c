@@ -21,9 +21,7 @@ int main(int argc, char * argv[]) //display fire and earth abilities
 	Entity *player;
 	Entity *enemy;
 	Entity *fireBall;
-	//Entity *waterBall;
-	//Entity *airBall;
-	//Entity *earthBall;
+	Entity *waterBall;
 	TileMap *map;
 	int playerHealth = 20;
 
@@ -70,10 +68,8 @@ int main(int argc, char * argv[]) //display fire and earth abilities
 	gf2d_space_add_body(space, player);
 
 	//pick ups
-	//waterBall = newWaterProjectile(vector2d(400, 70), waterBall);
-	fireBall = newFireProjectile(vector2d(400, 100), fireBall);
-	//earthBall = newEarthProjectile(vector2d(400, 130), earthBall);
-	//airBall = newAirProjectile(vector2d(400, 160), airBall);
+	waterBall = newWaterpickup(vector2d(400, 70), waterBall);
+	fireBall = newFirepickup(vector2d(400, 100), fireBall);
 	map = tilemap_load("levels/tilemap.map");
 	gui_set_health(playerHealth);
 	vector2d_copy(path[0],map->start);
@@ -98,6 +94,7 @@ int main(int argc, char * argv[]) //display fire and earth abilities
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(220, 335, 155, 30));
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(155, 410, 190, 30));
 	gf2d_space_add_static_shape(space, fireBall->hitbox);
+	gf2d_space_add_static_shape(space, waterBall->hitbox);
 	//tiles = newTile(vector2d(10, 10), tiles); //sets up tiles
 
 	
@@ -122,6 +119,7 @@ int main(int argc, char * argv[]) //display fire and earth abilities
 			drawEntity(player);
 			drawEntity(enemy);
 			drawEntity(fireBall);
+			drawEntity(waterBall);
 			player_update(player,space);
 			tilemap_draw(map, vector2d(86, 24));
 			//tilemap_draw_path(path, 2, map, vector2d(86, 24));
@@ -161,6 +159,8 @@ int levelTwo() //display water and air abilities
 	Entity *player;
 	Entity *enemy;
 	TileMap *map;
+	Entity *airBall;
+	Entity *earthBall;
 	int playerHealth = 20;
 
 	Collision collision;
@@ -196,6 +196,8 @@ int levelTwo() //display water and air abilities
 	player = newPlayer(vector2d(0, 0), player);
 	enemy = newEnemy(vector2d(200, 200), enemy);
 	gf2d_space_add_body(space, player);
+	earthBall = newEarthpickup(vector2d(400, 130), earthBall);
+	airBall = newAirpickup(vector2d(400, 160), airBall);
 	map = tilemap_load("levels/tilemap.map");
 	vector2d_copy(path[0], map->start);
 	vector2d_copy(path[1], map->end);
@@ -218,6 +220,8 @@ int levelTwo() //display water and air abilities
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(80, 440, 550, 30));
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(220, 335, 155, 30));
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(155, 410, 190, 30));
+	gf2d_space_add_static_shape(space, earthBall->hitbox);
+	gf2d_space_add_static_shape(space, airBall->hitbox);
 	//tiles = newTile(vector2d(10, 10), tiles); //sets up tiles
 
 
@@ -241,6 +245,8 @@ int levelTwo() //display water and air abilities
 		gf2d_sprite_draw_image(sprite, vector2d(0, 0));
 		drawEntity(player);
 		drawEntity(enemy);
+		drawEntity(earthBall);
+		drawEntity(airBall);
 		player_update(player, space);
 		tilemap_draw(map, vector2d(86, 24));
 		//tilemap_draw_path(path, 2, map, vector2d(86, 24));

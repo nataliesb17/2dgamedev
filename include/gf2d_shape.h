@@ -31,6 +31,8 @@ typedef enum
 typedef struct
 {
 	ShapeTypes type;
+	int id; //1 is tilemap //2 is pickup
+	int ability;
 	union
 	{
 		Circle c;

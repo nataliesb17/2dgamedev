@@ -23,6 +23,7 @@ Entity *newPlayer(Vector2D position)
 	entity->frame_num = 5;
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
 	entity->onGround = 0;
+	entity->ability = 0;
 	//entity->update = player_update;
 	return entity;
 
@@ -49,8 +50,23 @@ void player_update(Entity *self, Space *space) {
 
 	Collision staticHit = gf2d_space_shape_test(space, self->hitbox);
 	if (staticHit.collided >= 1) {
-		if (space == "fireBall") {
-			slog("pickup detected");
+		if (staticHit.shape->id == 2) {
+			if (staticHit.shape->ability == 1) {
+				self->ability = 1;
+				slog("earth pickup detected %i",self->ability);
+			}
+			else if (staticHit.shape->ability == 2) {
+				self->ability = 2;
+				slog("air pickup detected %i", self->ability);
+			}
+			else if (staticHit.shape->ability == 3) {
+				self->ability = 3;
+				slog("fire pickup detected %i", self->ability);
+			}
+			else if (staticHit.shape->ability == 4) {
+				self->ability = 4;
+				slog("water pickup detected %i", self->ability);
+			}
 		}
 		slog("collision detected");
 		self->onGround = 1;
@@ -61,7 +77,7 @@ void player_update(Entity *self, Space *space) {
 		self->onGround = 0;
 	}
 
-	slog("Position: %x, %y",self->velocity.x,self->velocity.y);
+	//slog("Position: %x, %y",self->velocity.x,self->velocity.y);
 	
 }
 
