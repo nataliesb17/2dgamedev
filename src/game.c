@@ -216,8 +216,8 @@ int levelTwo() //display water and air abilities
 	enemy = newEnemy(vector2d(200, 200), enemy);
 	gf2d_space_add_body(space, player);
 
-	earthBall = newEarthpickup(vector2d(400, 130), earthBall);
-	airBall = newAirpickup(vector2d(400, 160), airBall);
+	earthBall = newEarthpickup(vector2d(300, 300), earthBall);
+	airBall = newAirpickup(vector2d(300, 405), airBall);
 
 	earthObs = newEarthObstacle(vector2d(118,335));
 
@@ -240,10 +240,11 @@ int levelTwo() //display water and air abilities
 	//shape[3] = gf2d_shape_rect(-32, -32, 64, 64);
 	//shape[0] = gf2d_shape_rect(-16, -16, 32, 32);
 
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(80, 440, 550, 30));
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(220, 335, 155, 30));
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(155, 410, 190, 30));
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(155, 200, 30, 190));
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(80, 440, 260, 30)); //lowest collider
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(220, 335, 155, 30)); //next to column collider
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(155, 410, 92, 28)); //second lowest collider
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(415, 200, 26, 190)); //horizontal collider right side
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(500, 440, 150, 30)); //lowest collider right side
 	gf2d_space_add_static_shape(space, earthBall->hitbox);
 	gf2d_space_add_static_shape(space, airBall->hitbox);
 	gf2d_space_add_static_shape(space, earthObs->hitbox);
