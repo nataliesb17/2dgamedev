@@ -3,6 +3,7 @@
 #include "entity.h"
 #include "collision.h"
 #include "gf2d_gui.h"
+#include "obstacles.h"
 
 void player_update(Entity *self, Space *space);
 
@@ -31,7 +32,7 @@ Entity *newPlayer(Vector2D position)
 }
 
 
-void player_update(Entity *self, Space *space) {
+void player_update(Entity *self, Space *space, Entity *obstacle) {
 	const Uint8 *keys;
 	keys = SDL_GetKeyboardState(NULL);
 
@@ -76,18 +77,11 @@ void player_update(Entity *self, Space *space) {
 		if (staticHit.shape->id == 3) { //if player touches an obstacle
 			if (staticHit.shape->obstacle == 1) { //if obstacle gets destroyed by earth ability
 				if (self->ability == 1) {
-					//destroy obstacle
+					slog("earth obstacle detected");
+					destroyEntity(obstacle);
 				}
 				else {
-
-				}
-			}
-			if (staticHit.shape->obstacle == 2) { //if obstacle gets destroyed by air ability
-				if (self->ability == 2) {
-					//destroy obstacle
-				}
-				else {
-
+					slog("can not be destroyed with current ability");
 				}
 			}
 			if (staticHit.shape->obstacle == 3) { //if obstacle gets destroyed by fire ability
@@ -116,7 +110,7 @@ void player_update(Entity *self, Space *space) {
 		self->onGround = 0;
 	}
 
-	slog("Position: %i, %i",self->velocity.x,self->velocity.y);
+	//slog("Position: %i, %i",self->velocity.x,self->velocity.y);
 	
 }
 

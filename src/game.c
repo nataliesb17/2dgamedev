@@ -11,6 +11,7 @@
 #include "enemy.h"
 #include "gf2d_gui.h"
 #include "projectiles.h"
+#include "obstacles.h"
 
 int main(int argc, char * argv[]) //display fire and earth abilities
 {
@@ -23,6 +24,7 @@ int main(int argc, char * argv[]) //display fire and earth abilities
 	Entity *enemy;
 	Entity *fireBall;
 	Entity *waterBall;
+
 	TileMap *map;
 	int playerHealth = 20;
 
@@ -163,6 +165,7 @@ int levelTwo() //display water and air abilities
 	TileMap *map;
 	Entity *airBall;
 	Entity *earthBall;
+	Entity *earthObs;
 	int playerHealth = 20;
 
 	Collision collision;
@@ -200,9 +203,13 @@ int levelTwo() //display water and air abilities
 	player = newPlayer(vector2d(0, 0), player);
 	enemy = newEnemy(vector2d(200, 200), enemy);
 	gf2d_space_add_body(space, player);
+
 	earthBall = newEarthpickup(vector2d(400, 130), earthBall);
 	airBall = newAirpickup(vector2d(400, 160), airBall);
-	map = tilemap_load("levels/tilemap.map");
+
+	earthObs = newEarthObstacle(vector2d(300,400));
+
+	map = tilemap_load("levels/tilemap2.map");
 	vector2d_copy(path[0], map->start);
 	vector2d_copy(path[1], map->end);
 
@@ -226,6 +233,7 @@ int levelTwo() //display water and air abilities
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(155, 410, 190, 30));
 	gf2d_space_add_static_shape(space, earthBall->hitbox);
 	gf2d_space_add_static_shape(space, airBall->hitbox);
+	gf2d_space_add_static_shape(space, earthObs->hitbox);
 	//tiles = newTile(vector2d(10, 10), tiles); //sets up tiles
 
 
@@ -251,7 +259,8 @@ int levelTwo() //display water and air abilities
 		drawEntity(enemy);
 		drawEntity(earthBall);
 		drawEntity(airBall);
-		player_update(player, space);
+		drawEntity(earthObs);
+		player_update(player, space, earthObs);
 		gui_draw_hud();
 		tilemap_draw(map, vector2d(86, 24));
 		//tilemap_draw_path(path, 2, map, vector2d(86, 24));
