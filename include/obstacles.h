@@ -13,5 +13,19 @@ Entity *newEarthObstacle(Vector2D position);
 * @return pointer for the obstacle
 */
 
+Entity *newFireObstacle(Vector2D position);
+/**
+* @brief this spawns a new obstacle
+* @param position
+* @return pointer for the obstacle
+*/
+
+Entity *newWaterObstacle(Vector2D position);
+/**
+* @brief this spawns a new obstacle
+* @param position
+* @return pointer for the obstacle
+*/
+
 
 #endif

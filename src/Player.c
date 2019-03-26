@@ -86,18 +86,20 @@ void player_update(Entity *self, Space *space, Entity *obstacle) {
 			}
 			if (staticHit.shape->obstacle == 3) { //if obstacle gets destroyed by fire ability
 				if (self->ability == 3) {
-					//destroy obstacle
+					slog("fire obstacle detected");
+					destroyEntity(obstacle);
 				}
 				else {
-
+					slog("can not be destroyed with current ability");
 				}
 			}
 			if (staticHit.shape->obstacle == 4) { //if obstacle gets destroyed by water ability
 				if (self->ability == 4) {
-					//destroy obstacle
+					slog("water obstacle detected");
+					destroyEntity(obstacle);
 				}
 				else {
-
+					slog("can not be destroyed with current ability");
 				}
 			}
 		}
