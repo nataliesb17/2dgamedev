@@ -33,6 +33,15 @@ typedef struct
 	ShapeTypes type;
 	int id; //1 is tilemap //2 is pickup //3 is obstacle
 	int ability;
+	int obstacle; 
+
+	//Elemental Ability Obstacle (which ability destroys it)
+
+	//Earth = 1
+	//Air   = 2
+	//Fire  = 3
+	//Water = 4
+
 	union
 	{
 		Circle c;

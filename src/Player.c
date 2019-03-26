@@ -73,6 +73,40 @@ void player_update(Entity *self, Space *space) {
 				gui_setup_water();
 			}
 		}
+		if (staticHit.shape->id == 3) { //if player touches an obstacle
+			if (staticHit.shape->obstacle == 1) { //if obstacle gets destroyed by earth ability
+				if (self->ability == 1) {
+					//destroy obstacle
+				}
+				else {
+
+				}
+			}
+			if (staticHit.shape->obstacle == 2) { //if obstacle gets destroyed by air ability
+				if (self->ability == 2) {
+					//destroy obstacle
+				}
+				else {
+
+				}
+			}
+			if (staticHit.shape->obstacle == 3) { //if obstacle gets destroyed by fire ability
+				if (self->ability == 3) {
+					//destroy obstacle
+				}
+				else {
+
+				}
+			}
+			if (staticHit.shape->obstacle == 4) { //if obstacle gets destroyed by water ability
+				if (self->ability == 4) {
+					//destroy obstacle
+				}
+				else {
+
+				}
+			}
+		}
 		slog("collision detected");
 		self->onGround = 1;
 		self->velocity = vector2d(0, 0); 
@@ -82,7 +116,7 @@ void player_update(Entity *self, Space *space) {
 		self->onGround = 0;
 	}
 
-	//slog("Position: %x, %y",self->velocity.x,self->velocity.y);
+	slog("Position: %i, %i",self->velocity.x,self->velocity.y);
 	
 }
 
