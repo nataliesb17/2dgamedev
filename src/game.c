@@ -18,6 +18,7 @@ int main(int argc, char * argv[]) //display fire and earth abilities
     int done = 0;
     const Uint8 * keys;
     Sprite *sprite;
+	Sprite *gui;
 	Entity *player;
 	Entity *enemy;
 	Entity *fireBall;
@@ -156,6 +157,7 @@ int levelTwo() //display water and air abilities
 	int done = 0;
 	const Uint8 * keys;
 	Sprite *sprite;
+	Sprite *gui;
 	Entity *player;
 	Entity *enemy;
 	TileMap *map;
@@ -189,6 +191,8 @@ int levelTwo() //display water and air abilities
 	gf2d_sprite_init(1024);
 	entityManagerInit(1024);
 	SDL_ShowCursor(SDL_DISABLE);
+
+	gui_setup_hud();
 
 	/*demo setup*/
 	sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
@@ -248,6 +252,7 @@ int levelTwo() //display water and air abilities
 		drawEntity(earthBall);
 		drawEntity(airBall);
 		player_update(player, space);
+		gui_draw_hud();
 		tilemap_draw(map, vector2d(86, 24));
 		//tilemap_draw_path(path, 2, map, vector2d(86, 24));
 		gf2d_space_update(space);

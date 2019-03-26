@@ -23,7 +23,35 @@ void gui_close_hud()
 void gui_setup_hud()
 {
 	memset(&gui, 0, sizeof(GUI));
-	gui.hud = gf2d_sprite_load_image("images/ui/hud.png");
+	gui.hud = gf2d_sprite_load_image("images/ballgui/currentability.png");
+	atexit(gui_close_hud);
+}
+
+void gui_setup_fire() {
+	gf2d_sprite_free("images/ballgui/currentability.png");
+	memset(&gui, 0, sizeof(GUI));
+	gui.hud = gf2d_sprite_load_image("images/ballgui/fire_ability.png");
+	atexit(gui_close_hud);
+}
+
+void gui_setup_water() {
+	gf2d_sprite_free("images/ballgui/currentability.png");
+	memset(&gui, 0, sizeof(GUI));
+	gui.hud = gf2d_sprite_load_image("images/ballgui/water_ability.png");
+	atexit(gui_close_hud);
+}
+
+void gui_setup_air() {
+	gf2d_sprite_free("images/ballgui/currentability.png");
+	memset(&gui, 0, sizeof(GUI));
+	gui.hud = gf2d_sprite_load_image("images/ballgui/air_ability.png");
+	atexit(gui_close_hud);
+}
+
+void gui_setup_earth() {
+	gf2d_sprite_free("images/ballgui/currentability.png");
+	memset(&gui, 0, sizeof(GUI));
+	gui.hud = gf2d_sprite_load_image("images/ballgui/earth_ability.png");
 	atexit(gui_close_hud);
 }
 
@@ -64,9 +92,9 @@ void gui_draw_hud()
 	Vector4D color = { 255, 255, 255, 255 };
 	if (gui.healthPercent < 0.2)
 	{
-		gui.alert = (gui.alert + 0.02);
-		if (gui.alert >= M_PI)gui.alert = 0;
-		color.y = color.z = sin(gui.alert) * 255;
+		//gui.alert = (gui.alert + 0.02);
+		//if (gui.alert >= M_PI)gui.alert = 0;
+		//color.y = color.z = sin(gui.alert) * 255;
 	}
 	gf2d_sprite_draw(
 		gui.hud, vector2d(0, 0),

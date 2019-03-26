@@ -2,6 +2,7 @@
 #include "simple_logger.h"
 #include "entity.h"
 #include "collision.h"
+#include "gf2d_gui.h"
 
 void player_update(Entity *self, Space *space);
 
@@ -38,8 +39,8 @@ void player_update(Entity *self, Space *space) {
 	if (keys[SDL_SCANCODE_A])self->velocity.x -= .75; //left
 	if (keys[SDL_SCANCODE_S] && self->onGround == 0)self->velocity.y += .75; //down, doesn't work if on ground
 	if (keys[SDL_SCANCODE_D])self->velocity.x += .75; //right
-	if (keys[SDL_SCANCODE_Z] && keys[SDL_SCANCODE_D])self->velocity.x += 4; //air dash right
-	if (keys[SDL_SCANCODE_Z] && keys[SDL_SCANCODE_A])self->velocity.x -= 4; //air dash left
+	if (keys[SDL_SCANCODE_Z] && keys[SDL_SCANCODE_D] && self->ability == 2)self->velocity.x += 4; //air dash right
+	if (keys[SDL_SCANCODE_Z] && keys[SDL_SCANCODE_A] && self->ability == 2)self->velocity.x -= 4; //air dash left
 
 	vector2d_add(self->position, self->position, self->velocity);
 
@@ -54,18 +55,22 @@ void player_update(Entity *self, Space *space) {
 			if (staticHit.shape->ability == 1) {
 				self->ability = 1;
 				slog("earth pickup detected %i",self->ability);
+				gui_setup_earth();
 			}
 			else if (staticHit.shape->ability == 2) {
 				self->ability = 2;
 				slog("air pickup detected %i", self->ability);
+				gui_setup_air();
 			}
 			else if (staticHit.shape->ability == 3) {
 				self->ability = 3;
 				slog("fire pickup detected %i", self->ability);
+				gui_setup_fire();
 			}
 			else if (staticHit.shape->ability == 4) {
 				self->ability = 4;
 				slog("water pickup detected %i", self->ability);
+				gui_setup_water();
 			}
 		}
 		slog("collision detected");
