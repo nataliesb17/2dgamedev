@@ -26,6 +26,7 @@ Entity *newPlayer(Vector2D position)
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
 	entity->onGround = 0;
 	entity->ability = 0;
+	entity->hitbox.id = 0;
 	//entity->rigidBody.shape = &entity->hitbox;
 	//entity->update = player_update;
 	return entity;
@@ -33,7 +34,7 @@ Entity *newPlayer(Vector2D position)
 }
 
 
-void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstacle2) {
+void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstacle2,Entity *door) {
 	const Uint8 *keys;
 	keys = SDL_GetKeyboardState(NULL);
 
@@ -53,6 +54,10 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 
 	Collision staticHit = gf2d_space_shape_test(space, self->hitbox);
 	if (staticHit.collided >= 1) {
+		if (door->hitbox.id == 4) {
+			slog("id detected");
+			levelTwo();
+		}
 		if (staticHit.shape->id == 2) {
 			if (staticHit.shape->ability == 1) {
 				self->ability = 1;

@@ -145,9 +145,8 @@ int main(int argc, char * argv[]) //display fire and water abilities
 			drawEntity(waterBall);
 			drawEntity(waterObs);
 			drawEntity(fireObs);
-			player_update(player,space,fireObs,waterObs);
+			player_update(player,space,fireObs,waterObs,door);
 			y_enemy_update(enemy);
-			obs_update(door,space,collided);
 			tilemap_draw(map, vector2d(86, 24));
 			//tilemap_draw_path(path, 2, map, vector2d(86, 24));
 			gf2d_space_update(space);

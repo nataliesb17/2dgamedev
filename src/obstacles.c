@@ -5,7 +5,6 @@
 #include "gf2d_gui.h"
 #include "obstacles.h"
 
-void obs_update(Entity *self, Space *space);
 
 
 Entity *newEarthObstacle(Vector2D position)
@@ -100,16 +99,5 @@ Entity *newDoor(Vector2D position) {
 	entity->frame_num = 1;
 	entity->hitbox.id = 4;
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 32, 32);
-	entity->update = obs_update;
 	return entity;
-}
-
-void obs_update(Entity *door, Space *space,int collided) {
-	Collision staticHit = gf2d_space_shape_test(space, door->hitbox);
-	if (staticHit.collided >= 1) {
-		if (staticHit.shape->id == 4) {
-			collided == 1;
-			slog("%i", collided);
-		}
-	}
 }
