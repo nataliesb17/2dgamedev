@@ -26,13 +26,14 @@ Entity *newPlayer(Vector2D position)
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
 	entity->onGround = 0;
 	entity->ability = 0;
+	//entity->rigidBody.shape = &entity->hitbox;
 	//entity->update = player_update;
 	return entity;
 
 }
 
 
-void player_update(Entity *self, Space *space, Entity *obstacle) {
+void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstacle2) {
 	const Uint8 *keys;
 	keys = SDL_GetKeyboardState(NULL);
 
@@ -78,7 +79,8 @@ void player_update(Entity *self, Space *space, Entity *obstacle) {
 			if (staticHit.shape->obstacle == 1) { //if obstacle gets destroyed by earth ability
 				if (self->ability == 1) {
 					slog("earth obstacle detected");
-					destroyEntity(obstacle);
+					gf2d_space_remove_body(space, &obstacle1->rigidBody);
+					destroyEntity(obstacle1);
 				}
 				else {
 					slog("can not be destroyed with current ability");
@@ -87,7 +89,8 @@ void player_update(Entity *self, Space *space, Entity *obstacle) {
 			if (staticHit.shape->obstacle == 3) { //if obstacle gets destroyed by fire ability
 				if (self->ability == 3) {
 					slog("fire obstacle detected");
-					destroyEntity(obstacle);
+					gf2d_space_remove_body(space, &obstacle1->rigidBody);
+					destroyEntity(obstacle1);
 				}
 				else {
 					slog("can not be destroyed with current ability");
@@ -96,7 +99,8 @@ void player_update(Entity *self, Space *space, Entity *obstacle) {
 			if (staticHit.shape->obstacle == 4) { //if obstacle gets destroyed by water ability
 				if (self->ability == 4) {
 					slog("water obstacle detected");
-					destroyEntity(obstacle);
+					gf2d_space_remove_body(space, &obstacle2->rigidBody);
+					destroyEntity(obstacle2);
 				}
 				else {
 					slog("can not be destroyed with current ability");

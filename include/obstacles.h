@@ -27,5 +27,12 @@ Entity *newWaterObstacle(Vector2D position);
 * @return pointer for the obstacle
 */
 
+Entity *newDoor(Vector2D position);
+/**
+* @brief this spawns a new obstacle
+* @param position
+* @return pointer for the obstacle
+*/
+
 
 #endif

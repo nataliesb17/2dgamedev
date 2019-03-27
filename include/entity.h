@@ -17,6 +17,7 @@ typedef struct entities {
 	Body rigidBody;
 	Space *space;
 
+	float timer;
 	float current_frame;
 	int frame_num;
 	int onGround;

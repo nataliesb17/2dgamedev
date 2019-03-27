@@ -196,4 +196,13 @@ void gf2d_space_body_collision_test_filter(Space *space, Shape shape, Collision 
 */
 Shape gf2d_body_to_shape(Body *a);
 
+void gf2d_space_remove_body(Space *space, Body *body);
+
+/**
+* @brief add a statuc shape to the space
+* @note the shape parameters need to be in absolute space, not relative to any body
+* @param space the space to add to
+* @param shape the shape to add.
+*/
+
 #endif

@@ -13,7 +13,7 @@
 #include "projectiles.h"
 #include "obstacles.h"
 
-int main(int argc, char * argv[]) //display fire and earth abilities
+int main(int argc, char * argv[]) //display fire and water abilities
 {
     /*variable declarations*/
     int done = 0;
@@ -25,10 +25,13 @@ int main(int argc, char * argv[]) //display fire and earth abilities
 	Entity *fireBall;
 	Entity *waterBall;
 
+	Entity *door; //level transition!
+
 	Entity *fireObs;
 	Entity *waterObs;
 
 	TileMap *map;
+	int collided = 0;
 	int playerHealth = 20;
 
 	Collision collision;
@@ -68,17 +71,19 @@ int main(int argc, char * argv[]) //display fire and earth abilities
 	player = newPlayer(vector2d(0, 0), player);
 
 	//enemy
-	enemy = newEnemy(vector2d(200, 200), enemy);
+	enemy = newYEnemy(vector2d(370, 350), enemy);
 
-	fireObs = newFireObstacle(vector2d(200, 150));
-	waterObs = newWaterObstacle(vector2d(400, 40));
+	door = newDoor(vector2d(300,100), door);
+
+	fireObs = newFireObstacle(vector2d(500, 270));
+	waterObs = newWaterObstacle(vector2d(120, 160));
 
 
 	gf2d_space_add_body(space, player);
 
 	//pick ups
-	waterBall = newWaterpickup(vector2d(400, 70), waterBall);
-	fireBall = newFirepickup(vector2d(400, 100), fireBall);
+	waterBall = newWaterpickup(vector2d(300, 200), waterBall);
+	fireBall = newFirepickup(vector2d(300, 300), fireBall);
 	map = tilemap_load("levels/tilemap.map");
 	gui_set_health(playerHealth);
 	vector2d_copy(path[0],map->start);
@@ -99,14 +104,19 @@ int main(int argc, char * argv[]) //display fire and earth abilities
 	//shape[3] = gf2d_shape_rect(-32, -32, 64, 64);
 	//shape[0] = gf2d_shape_rect(-16, -16, 32, 32);
 
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(80, 440, 550, 30));
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(220, 335, 155, 30));
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(155, 410, 190, 30));
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(90, 415, 600, 26)); //lowest collider
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(415, 200, 26, 190)); //horizontal collider
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(92, 200, 26, 220)); //horizontal collider left
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(220, 180, 26, 190)); //horizontal collider middle
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(220, 230, 280, 26)); //highest vertical collider
+
 	gf2d_space_add_static_shape(space, fireBall->hitbox);
 	gf2d_space_add_static_shape(space, waterBall->hitbox);
 
 	gf2d_space_add_static_shape(space, waterObs->hitbox);
 	gf2d_space_add_static_shape(space, fireObs->hitbox);
+
+	gf2d_space_add_static_shape(space, door->hitbox);
 	//tiles = newTile(vector2d(10, 10), tiles); //sets up tiles
 
 	
@@ -131,11 +141,13 @@ int main(int argc, char * argv[]) //display fire and earth abilities
 			drawEntity(player);
 			drawEntity(enemy);
 			drawEntity(fireBall);
+			drawEntity(door);
 			drawEntity(waterBall);
 			drawEntity(waterObs);
 			drawEntity(fireObs);
-			player_update(player,space,waterObs);
-			player_update(player, space, fireObs);
+			player_update(player,space,fireObs,waterObs);
+			y_enemy_update(enemy);
+			obs_update(door,space,collided);
 			tilemap_draw(map, vector2d(86, 24));
 			//tilemap_draw_path(path, 2, map, vector2d(86, 24));
 			gf2d_space_update(space);
@@ -160,12 +172,12 @@ int main(int argc, char * argv[]) //display fire and earth abilities
 
     }
 	gf2d_space_free(space);
-    slog("---==== END ====---");
+	slog("---==== END ====---");
 	levelTwo();
-    return 0;
+	return 0;
 }
 
-int levelTwo() //display water and air abilities
+int levelTwo() //display earth and air abilities
 {
 	/*variable declarations*/
 	int done = 0;
@@ -213,7 +225,7 @@ int levelTwo() //display water and air abilities
 	sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
 	// mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
 	player = newPlayer(vector2d(0, 0), player);
-	enemy = newEnemy(vector2d(200, 200), enemy);
+	enemy = newXEnemy(vector2d(370, 190), enemy);
 	gf2d_space_add_body(space, player);
 
 	earthBall = newEarthpickup(vector2d(300, 300), earthBall);
@@ -243,7 +255,9 @@ int levelTwo() //display water and air abilities
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(80, 440, 260, 30)); //lowest collider
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(220, 335, 155, 30)); //next to column collider
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(155, 410, 92, 28)); //second lowest collider
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(155, 180, 92, 28)); //higher 3 spot collider
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(415, 200, 26, 190)); //horizontal collider right side
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(93, 200, 26, 190)); //horizontal collider left side
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(500, 440, 150, 30)); //lowest collider right side
 	gf2d_space_add_static_shape(space, earthBall->hitbox);
 	gf2d_space_add_static_shape(space, airBall->hitbox);
@@ -272,6 +286,7 @@ int levelTwo() //display water and air abilities
 		drawEntity(airBall);
 		drawEntity(earthObs);
 		player_update(player, space, earthObs);
+		x_enemy_update(enemy);
 		gui_draw_hud();
 		tilemap_draw(map, vector2d(86, 24));
 		//tilemap_draw_path(path, 2, map, vector2d(86, 24));

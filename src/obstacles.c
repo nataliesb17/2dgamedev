@@ -28,6 +28,7 @@ Entity *newEarthObstacle(Vector2D position)
 	entity->hitbox.id = 3;
 	entity->hitbox.ability = 1;
 	entity->hitbox.obstacle = 1;
+	entity->rigidBody.shape = &entity->hitbox;
 	//entity->update = player_update;
 	return entity;
 
@@ -52,6 +53,7 @@ Entity *newFireObstacle(Vector2D position)
 	entity->hitbox.id = 3;
 	entity->hitbox.ability = 3;
 	entity->hitbox.obstacle = 3;
+	entity->rigidBody.shape = &entity->hitbox;
 	//entity->update = player_update;
 	return entity;
 
@@ -70,13 +72,44 @@ Entity *newWaterObstacle(Vector2D position)
 	}
 	vector2d_copy(entity->position, position);
 
-	entity->sprite = gf2d_sprite_load_all("", 98, 32, 1);
+	entity->sprite = gf2d_sprite_load_all("images/fire.png", 32, 50, 1);
 	entity->frame_num = 1;
-	entity->hitbox = gf2d_shape_rect(position.x, position.y, 98, 32);
+	entity->hitbox = gf2d_shape_rect(position.x, position.y, 32, 50);
 	entity->hitbox.id = 3;
 	entity->hitbox.ability = 4;
 	entity->hitbox.obstacle = 4;
+	entity->rigidBody.shape = &entity->hitbox;
 	//entity->update = player_update;
 	return entity;
 
+}
+Entity *newDoor(Vector2D position) {
+	Entity *entity = NULL;
+	int i;
+	Space *space = NULL;
+
+	entity = ent_new();
+
+	if (!entity) {
+		slog("can't determine the new obstacle entity");
+		return NULL;
+	}
+	vector2d_copy(entity->position, position);
+
+	entity->sprite = gf2d_sprite_load_all("images/door.png", 32, 32, 1);
+	entity->frame_num = 1;
+	entity->hitbox.id = 4;
+	entity->hitbox = gf2d_shape_rect(position.x, position.y, 32, 32);
+	entity->update = obs_update;
+	return entity;
+}
+
+void obs_update(Entity *door, Space *space,int collided) {
+	Collision staticHit = gf2d_space_shape_test(space, door->hitbox);
+	if (staticHit.collided >= 1) {
+		if (staticHit.shape->id == 4) {
+			collided == 1;
+			slog("%i", collided);
+		}
+	}
 }
