@@ -12,6 +12,7 @@
 #include "gf2d_gui.h"
 #include "projectiles.h"
 #include "obstacles.h"
+#include "gf2d_particles.h"
 
 int main(int argc, char * argv[]) //display fire and water abilities
 {
@@ -33,6 +34,8 @@ int main(int argc, char * argv[]) //display fire and water abilities
 	TileMap *map;
 	int collided = 0;
 	int playerHealth = 20;
+
+	ParticleEmitter *pe;
 
 	Collision collision;
 	Space *space = NULL;
@@ -71,19 +74,44 @@ int main(int argc, char * argv[]) //display fire and water abilities
 	player = newPlayer(vector2d(0, 0), player);
 
 	//enemy
-	enemy = newYEnemy(vector2d(370, 350), enemy);
+	enemy = newYEnemy(vector2d(290, 325), enemy); 
 
-	door = newDoor(vector2d(300,100), door);
+	//door = newDoor(vector2d(300,100), door);
 
-	fireObs = newFireObstacle(vector2d(500, 270));
-	waterObs = newWaterObstacle(vector2d(120, 160));
+	fireObs = newFireObstacle(vector2d(413, 245)); 
+	waterObs = newWaterObstacle(vector2d(33, 135)); 
 
+	pe = gf2d_particle_emitter_new_full(
+		500000,
+		100,
+		5,
+		PT_Shape,
+		vector2d(575, 340),
+		vector2d(2, 2),
+		vector2d(0, -3),
+		vector2d(2, 1),
+		vector2d(0, 0.05),
+		vector2d(0, 0.01),
+		gf2d_color(0.85, 0.55, 0, 1),
+		gf2d_color(-0.01, -0.02, 0, 0),
+		gf2d_color(0.1, 0.1, 0, 0.1),
+		&shape,
+		0,
+		0,
+		0,
+		"images/earth_ball.png",
+		32,
+		32,
+		1,
+		0,
+		//        SDL_BLENDMODE_BLEND);
+		SDL_BLENDMODE_ADD);
 
 	gf2d_space_add_body(space, player);
 
 	//pick ups
-	waterBall = newWaterpickup(vector2d(300, 200), waterBall);
-	fireBall = newFirepickup(vector2d(300, 300), fireBall);
+	waterBall = newWaterpickup(vector2d(213, 175), waterBall); 
+	fireBall = newFirepickup(vector2d(213, 275), fireBall); //minus 25y and 87x
 	map = tilemap_load("levels/tilemap.map");
 	gui_set_health(playerHealth);
 	vector2d_copy(path[0],map->start);
@@ -104,11 +132,12 @@ int main(int argc, char * argv[]) //display fire and water abilities
 	//shape[3] = gf2d_shape_rect(-32, -32, 64, 64);
 	//shape[0] = gf2d_shape_rect(-16, -16, 32, 32);
 
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(90, 415, 600, 26)); //lowest collider
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(415, 200, 26, 190)); //horizontal collider
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(92, 200, 26, 220)); //horizontal collider left
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(220, 180, 26, 190)); //horizontal collider middle
-	gf2d_space_add_static_shape(space, gf2d_shape_rect(220, 230, 280, 26)); //highest vertical collider
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(3, 390, 600, 26)); //lowest collider //minus 25y and 87x
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(328, 175, 26, 190)); //horizontal collider 
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(5, 175, 26, 220)); //horizontal collider left 
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(5, 235, 90, 26)); //small horizontal left
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(133, 155, 26, 190)); //horizontal collider middle 
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(133, 205, 280, 26)); //highest vertical collider
 
 	gf2d_space_add_static_shape(space, fireBall->hitbox);
 	gf2d_space_add_static_shape(space, waterBall->hitbox);
@@ -117,6 +146,7 @@ int main(int argc, char * argv[]) //display fire and water abilities
 	gf2d_space_add_static_shape(space, fireObs->hitbox);
 
 	gf2d_space_add_static_shape(space, door->hitbox);
+
 	//tiles = newTile(vector2d(10, 10), tiles); //sets up tiles
 
 	
@@ -133,11 +163,16 @@ int main(int argc, char * argv[]) //display fire and water abilities
         mf+=0.1;
         if (mf >= 16.0)mf = 0;
         
+		gf2d_particle_emitter_update(pe);
+		gf2d_particle_new_default(pe, 20);
         
         gf2d_graphics_clear_screen();// clears drawing buffers
         // all drawing should happen betweem clear_screen and next_frame
             //backgrounds drawn first
             gf2d_sprite_draw_image(sprite,vector2d(0,0));
+
+			gf2d_particle_emitter_draw(pe);
+
 			drawEntity(player);
 			drawEntity(enemy);
 			drawEntity(fireBall);
@@ -147,7 +182,7 @@ int main(int argc, char * argv[]) //display fire and water abilities
 			drawEntity(fireObs);
 			player_update(player,space,fireObs,waterObs,door);
 			y_enemy_update(enemy);
-			tilemap_draw(map, vector2d(86, 24));
+			tilemap_draw(map, vector2d(0, 0));
 			//tilemap_draw_path(path, 2, map, vector2d(86, 24));
 			gf2d_space_update(space);
 			gui_draw_hud();
@@ -170,9 +205,10 @@ int main(int argc, char * argv[]) //display fire and water abilities
 
 
     }
+	gf2d_particle_emitter_free(pe);
 	gf2d_space_free(space);
 	slog("---==== END ====---");
-	levelTwo();
+	//levelTwo();
 	return 0;
 }
 
@@ -273,7 +309,6 @@ int levelTwo() //display earth and air abilities
 		SDL_GetMouseState(&mx, &my);
 		mf += 0.1;
 		if (mf >= 16.0)mf = 0;
-
 
 		gf2d_graphics_clear_screen();// clears drawing buffers
 		// all drawing should happen betweem clear_screen and next_frame

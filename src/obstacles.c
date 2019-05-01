@@ -5,7 +5,8 @@
 #include "gf2d_gui.h"
 #include "obstacles.h"
 
-
+void fireObstacle_update(Entity *obstacle);
+void waterObstacle_update(Entity *obstacle);
 
 Entity *newEarthObstacle(Vector2D position)
 {

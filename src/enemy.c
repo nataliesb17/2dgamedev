@@ -44,7 +44,7 @@ Entity *newYEnemy(Vector2D position)
 
 	entity->sprite = gf2d_sprite_load_all("images/glooRotated.png", 32, 32, 2); //this is the player sprite
 	entity->frame_num = 2;
-	//entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
+	entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
 	entity->update = y_enemy_update;
 	entity->timer = 0;
 	return entity;
@@ -65,7 +65,7 @@ Entity *newXEnemy(Vector2D position)
 
 	entity->sprite = gf2d_sprite_load_all("images/robot_scorpion.png", 50, 44, 1); //this is the player sprite
 	entity->frame_num = 1;
-	//entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
+	entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
 	entity->update = x_enemy_update;
 	entity->timer = 0;
 	return entity;
@@ -73,6 +73,12 @@ Entity *newXEnemy(Vector2D position)
 }
 
 void y_enemy_update(Entity *enemy) {
+
+	enemy->hitbox.s.c.x = enemy->position.x + 5;
+	enemy->hitbox.s.c.y = enemy->position.y + 3;
+
+	gf2d_shape_draw(enemy->hitbox, gf2d_color(1, 0, 0, 1), vector2d(0, 0));
+
 	enemy->timer += 0.01f;
 	if (enemy->timer >= 1.0f) {
 		enemy->position.y += 1;
