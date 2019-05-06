@@ -104,7 +104,7 @@ void gui_draw_hud()
 		NULL,
 		&color,
 		0);
-	//gui_draw_percent_bar_horizontal(gf2d_rect(10, 10, 145, 10), gui.healthPercent, vector4d((1 - gui.healthPercent) * 255, gui.healthPercent * 255, 0, 255), vector4d(128, 0, 0, 128), 1);
+	gui_draw_percent_bar_horizontal(gf2d_rect(10, 10, 145, 10), gui.healthPercent, vector4d((1 - gui.healthPercent) * 255, gui.healthPercent * 255, 0, 255), vector4d(128, 0, 0, 128), 1);
 	//gui_draw_percent_bar_horizontal(gf2d_rect(10, 20, 145, 10), gui.energyPercent, vector4d(0, 255, 255, 255), vector4d(0, 64, 64, 255), 1);
 	//gui_draw_percent_bar_horizontal(gf2d_rect(1045, 10, 145, 10), gui.opponentPercent, vector4d(255, 0, 64, 255), vector4d(64, 0, 32, 255), 0);
 }

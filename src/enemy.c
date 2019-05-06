@@ -33,6 +33,7 @@ Entity *newYEnemy(Vector2D position)
 {
 	Entity *entity = NULL;
 	int i;
+	Space *space = NULL;
 
 	entity = ent_new();
 
@@ -47,6 +48,8 @@ Entity *newYEnemy(Vector2D position)
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
 	entity->update = y_enemy_update;
 	entity->timer = 0;
+	entity->hitbox.id = 4;
+	entity->rigidBody.shape = &entity->hitbox;
 	return entity;
 
 }
@@ -67,7 +70,8 @@ Entity *newXEnemy(Vector2D position)
 	entity->frame_num = 1;
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 20, 20);
 	entity->update = x_enemy_update;
-	entity->timer = 0;
+	entity->timer = 0; 
+	entity->hitbox.id = 4;
 	return entity;
 
 }

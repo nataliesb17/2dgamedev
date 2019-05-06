@@ -34,7 +34,7 @@ Entity *newPlayer(Vector2D position)
 }
 
 
-void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstacle2,Entity *door) {
+void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstacle2,Entity *door, Entity *enemy) {
 	const Uint8 *keys;
 	keys = SDL_GetKeyboardState(NULL);
 
@@ -56,7 +56,11 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 	if (staticHit.collided >= 1) {
 		if (door->hitbox.id == 4) {
 			slog("id detected");
-			levelTwo();
+			//levelTwo();
+		}
+		if (staticHit.shape->id == 4) {
+			destroyEntity(enemy);
+			slog("enemy detected");
 		}
 		if (staticHit.shape->id == 2) {
 			if (staticHit.shape->ability == 1) {

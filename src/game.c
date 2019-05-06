@@ -13,6 +13,8 @@
 #include "projectiles.h"
 #include "obstacles.h"
 #include "gf2d_particles.h"
+#include "gf2d_mouse.h"
+#include "gf2d_audio.h"
 
 int main(int argc, char * argv[]) //display fire and water abilities
 {
@@ -25,6 +27,7 @@ int main(int argc, char * argv[]) //display fire and water abilities
 	Entity *enemy;
 	Entity *fireBall;
 	Entity *waterBall;
+	Mix_Music *music;
 
 	Entity *door; //level transition!
 
@@ -33,9 +36,11 @@ int main(int argc, char * argv[]) //display fire and water abilities
 
 	TileMap *map;
 	int collided = 0;
-	int playerHealth = 20;
+	int playerHealth = 100;
 
 	ParticleEmitter *pe;
+	Sprite *mouse;
+	Vector4D mouseColor = { 39, 135, 27, 255 };
 
 	Collision collision;
 	Space *space = NULL;
@@ -44,8 +49,6 @@ int main(int argc, char * argv[]) //display fire and water abilities
     
     int mx,my,i;
     float mf = 0;
-    Sprite *mouse;
-    Vector4D mouseColor = {39,135,27,255};
 	static Vector2D path[2];
     
     /*program initializtion*/
@@ -62,13 +65,16 @@ int main(int argc, char * argv[]) //display fire and water abilities
     gf2d_graphics_set_frame_delay(16);
     gf2d_sprite_init(1024);
 	entityManagerInit(1024);
+	//gf2d_audio_init(256, 16, 4, 1, 1, 1);
 
 	gui_setup_hud();
     SDL_ShowCursor(SDL_DISABLE);
     
     /*demo setup*/
     sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
-   // mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
+    //mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
+	//music = Mix_LoadMUS("music/jump.wav");
+	//Mix_PlayMusic(music, -1);
 
 	//player
 	player = newPlayer(vector2d(0, 0), player);
@@ -81,39 +87,13 @@ int main(int argc, char * argv[]) //display fire and water abilities
 	fireObs = newFireObstacle(vector2d(413, 245)); 
 	waterObs = newWaterObstacle(vector2d(33, 135)); 
 
-	pe = gf2d_particle_emitter_new_full(
-		500000,
-		100,
-		5,
-		PT_Shape,
-		vector2d(575, 340),
-		vector2d(2, 2),
-		vector2d(0, -3),
-		vector2d(2, 1),
-		vector2d(0, 0.05),
-		vector2d(0, 0.01),
-		gf2d_color(0.85, 0.55, 0, 1),
-		gf2d_color(-0.01, -0.02, 0, 0),
-		gf2d_color(0.1, 0.1, 0, 0.1),
-		&shape,
-		0,
-		0,
-		0,
-		"images/earth_ball.png",
-		32,
-		32,
-		1,
-		0,
-		//        SDL_BLENDMODE_BLEND);
-		SDL_BLENDMODE_ADD);
-
-	gf2d_space_add_body(space, player);
+	//gf2d_space_add_body(space, player);
 
 	//pick ups
 	waterBall = newWaterpickup(vector2d(213, 175), waterBall); 
 	fireBall = newFirepickup(vector2d(213, 275), fireBall); //minus 25y and 87x
 	map = tilemap_load("levels/tilemap.map");
-	gui_set_health(playerHealth);
+	gui_set_health(playerHealth); //set health here
 	vector2d_copy(path[0],map->start);
 	vector2d_copy(path[1],map->end);
 
@@ -163,15 +143,15 @@ int main(int argc, char * argv[]) //display fire and water abilities
         mf+=0.1;
         if (mf >= 16.0)mf = 0;
         
-		gf2d_particle_emitter_update(pe);
-		gf2d_particle_new_default(pe, 20);
+		//gf2d_particle_emitter_update(pe);
+		//gf2d_particle_new_default(pe, 20);
         
         gf2d_graphics_clear_screen();// clears drawing buffers
         // all drawing should happen betweem clear_screen and next_frame
             //backgrounds drawn first
             gf2d_sprite_draw_image(sprite,vector2d(0,0));
 
-			gf2d_particle_emitter_draw(pe);
+			//gf2d_particle_emitter_draw(pe);
 
 			drawEntity(player);
 			drawEntity(enemy);
@@ -180,7 +160,7 @@ int main(int argc, char * argv[]) //display fire and water abilities
 			drawEntity(waterBall);
 			drawEntity(waterObs);
 			drawEntity(fireObs);
-			player_update(player,space,fireObs,waterObs,door);
+			player_update(player,space,fireObs,waterObs,door,enemy);
 			y_enemy_update(enemy);
 			tilemap_draw(map, vector2d(0, 0));
 			//tilemap_draw_path(path, 2, map, vector2d(86, 24));
@@ -205,7 +185,9 @@ int main(int argc, char * argv[]) //display fire and water abilities
 
 
     }
-	gf2d_particle_emitter_free(pe);
+	//gf2d_particle_emitter_free(pe);
+	//Mix_HaltMusic();
+	//Mix_FreeMusic(music);
 	gf2d_space_free(space);
 	slog("---==== END ====---");
 	//levelTwo();
