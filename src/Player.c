@@ -4,6 +4,7 @@
 #include "collision.h"
 #include "gf2d_gui.h"
 #include "obstacles.h"
+#include "gf2d_audio.h"
 
 void player_update(Entity *self, Space *space);
 
@@ -34,11 +35,12 @@ Entity *newPlayer(Vector2D position)
 }
 
 
-void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstacle2,Entity *door, Entity *enemy) {
+void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstacle2,Entity *door, Entity *enemy, Mix_Music *music, Mix_Music *collided) {
 	const Uint8 *keys;
+
 	keys = SDL_GetKeyboardState(NULL);
 
-	if (keys[SDL_SCANCODE_W])self->velocity.y -= 3; //up
+	if (keys[SDL_SCANCODE_W])self->velocity.y -= 7 && Mix_PlayChannel(-1, music, 0); //up
 	if (keys[SDL_SCANCODE_A])self->velocity.x -= .75; //left
 	if (keys[SDL_SCANCODE_S] && self->onGround == 0)self->velocity.y += .75; //down, doesn't work if on ground
 	if (keys[SDL_SCANCODE_D])self->velocity.x += .75; //right
@@ -65,21 +67,25 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 		if (staticHit.shape->id == 2) {
 			if (staticHit.shape->ability == 1) {
 				self->ability = 1;
+				Mix_PlayChannel(2, collided, 0);
 				slog("earth pickup detected %i",self->ability);
 				gui_setup_earth();
 			}
 			else if (staticHit.shape->ability == 2) {
 				self->ability = 2;
+				Mix_PlayChannel(2, collided, 0);
 				slog("air pickup detected %i", self->ability);
 				gui_setup_air();
 			}
 			else if (staticHit.shape->ability == 3) {
 				self->ability = 3;
+				Mix_PlayChannel(2, collided, 0);
 				slog("fire pickup detected %i", self->ability);
 				gui_setup_fire();
 			}
 			else if (staticHit.shape->ability == 4) {
 				self->ability = 4;
+				Mix_PlayChannel(2, collided, 0);
 				slog("water pickup detected %i", self->ability);
 				gui_setup_water();
 			}

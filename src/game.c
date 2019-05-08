@@ -28,6 +28,7 @@ int main(int argc, char * argv[]) //display fire and water abilities
 	Entity *fireBall;
 	Entity *waterBall;
 	Mix_Music *music;
+	Mix_Music *collided_sound;
 
 	Entity *door; //level transition!
 
@@ -73,8 +74,9 @@ int main(int argc, char * argv[]) //display fire and water abilities
     /*demo setup*/
     sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
     //mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
-	music = Mix_LoadWAV("music/jump.wav");
-	Mix_PlayChannel(-1, music, 0);
+	music = Mix_LoadWAV("music/8bitjump.wav");
+	collided_sound = Mix_LoadWAV("pickup.wav");
+	//Mix_PlayChannel(-1, music, 0);
 
 	//player
 	player = newPlayer(vector2d(0, 0), player);
@@ -116,6 +118,9 @@ int main(int argc, char * argv[]) //display fire and water abilities
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(328, 175, 26, 190)); //horizontal collider 
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(5, 175, 26, 220)); //horizontal collider left 
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(5, 235, 90, 26)); //small horizontal left
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(70, 288, 90, 26)); //small horizontal right bottom
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(150, 313, 140, 26)); //horizontal below fire ability
+	gf2d_space_add_static_shape(space, gf2d_shape_rect(72, 155, 90, 26)); //small horizontal right top
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(133, 155, 26, 190)); //horizontal collider middle 
 	gf2d_space_add_static_shape(space, gf2d_shape_rect(133, 205, 280, 26)); //highest vertical collider
 
@@ -160,7 +165,7 @@ int main(int argc, char * argv[]) //display fire and water abilities
 			drawEntity(waterBall);
 			drawEntity(waterObs);
 			drawEntity(fireObs);
-			player_update(player,space,fireObs,waterObs,door,enemy);
+			player_update(player,space,fireObs,waterObs,door,enemy,music);
 			y_enemy_update(enemy);
 			tilemap_draw(map, vector2d(0, 0));
 			//tilemap_draw_path(path, 2, map, vector2d(86, 24));
@@ -188,6 +193,7 @@ int main(int argc, char * argv[]) //display fire and water abilities
 	//gf2d_particle_emitter_free(pe);
 	//Mix_HaltMusic();
 	Mix_FreeMusic(&music);
+	Mix_FreeMusic(&collided_sound);
 	gf2d_space_free(space);
 	slog("---==== END ====---");
 	//levelTwo();
