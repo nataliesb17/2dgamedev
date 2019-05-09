@@ -37,7 +37,7 @@ struct ParticleEmitter_S
 };
 
 void gf2d_particle_update(Particle *p, Uint32 now);
-void gf2d_particle_draw(Particle *p);
+void gf2d_particle_draw(Particle *p, Vector2D offset);
 
 void gf2d_particle_free(Particle *p)
 {
@@ -160,13 +160,13 @@ void gf2d_particle_emitter_update(ParticleEmitter *pe)
 	}
 }
 
-void gf2d_particle_emitter_draw(ParticleEmitter *pe)
+void gf2d_particle_emitter_draw(ParticleEmitter *pe, Vector2D offset)
 {
 	int i;
 	if (!pe)return;
 	for (i = 0; i < pe->maxParticles; i++)
 	{
-		gf2d_particle_draw(&pe->particleList[i]);
+		gf2d_particle_draw(&pe->particleList[i], offset);
 	}
 }
 
@@ -177,7 +177,7 @@ void gf2d_particle_new_default(
 	Vector2D position;
 	Vector2D velocity;
 	Vector2D acceleration;
-	Color color, colorVariance;
+	Color color = { 0 }, colorVariance = { 0 };
 	int i;
 	if (!pe)
 	{
@@ -204,7 +204,8 @@ void gf2d_particle_new_default(
 			pe->spriteFile,
 			pe->frameWidth,
 			pe->frameHeight,
-			pe->framesPerLine),
+			pe->framesPerLine,
+			false),
 			&pe->shape,
 			position,
 			velocity,
@@ -326,17 +327,19 @@ Particle * gf2d_particle_new(ParticleEmitter *pe)
 	return NULL;
 }
 
-void gf2d_particle_draw(Particle *p)
+void gf2d_particle_draw(Particle *p, Vector2D offset)
 {
 	Vector4D color;
+	Vector2D position;
 	Shape shape;
 	if ((!p) || (p->inuse == 0))return;
 	switch (p->type)
 	{
 	case PT_Pixel:
+		vector2d_add(position, p->position, offset);
 		SDL_SetRenderDrawBlendMode(gf2d_graphics_get_renderer(), p->mode);
 		color = gf2d_color_to_vector4(p->color);
-		gf2d_draw_pixel(p->position, gf2d_color_to_vector4(p->color));
+		gf2d_draw_pixel(position, gf2d_color_to_vector4(p->color));
 		SDL_SetRenderDrawBlendMode(gf2d_graphics_get_renderer(), SDL_BLENDMODE_BLEND);
 		break;
 	case PT_Shape:
@@ -344,15 +347,16 @@ void gf2d_particle_draw(Particle *p)
 		gf2d_shape_move(&shape, p->position);
 		SDL_SetRenderDrawBlendMode(gf2d_graphics_get_renderer(), p->mode);
 		color = gf2d_color_to_vector4(p->color);
-		gf2d_shape_draw(shape, p->color,vector2d(0,0));
+		gf2d_shape_draw(shape, p->color, offset);
 		SDL_SetRenderDrawBlendMode(gf2d_graphics_get_renderer(), SDL_BLENDMODE_BLEND);
 		break;
 	case PT_Sprite:
+		vector2d_add(position, p->position, offset);
 		SDL_SetTextureBlendMode(p->sprite->texture, p->mode);
 		color = gf2d_color_to_vector4(p->color);
 		gf2d_sprite_draw(
 			p->sprite,
-			vector2d(p->position.x - (p->sprite->frame_w / 2), p->position.y - (p->sprite->frame_h / 2)),
+			vector2d(position.x - (p->sprite->frame_w / 2), position.y - (p->sprite->frame_h / 2)),
 			NULL,
 			NULL,
 			NULL,

@@ -135,6 +135,30 @@ int main(int argc, char * argv[]) //display fire and water abilities
 	//tiles = newTile(vector2d(10, 10), tiles); //sets up tiles
 
 	
+	pe = gf2d_particle_emitter_new_full(
+		2048,
+		10,
+		5,
+		PT_Pixel,
+		vector2d(0, 0),
+		vector2d(0, 0),
+		vector2d(0, 0),
+		vector2d(0, 0),
+		vector2d(0, 0),
+		vector2d(0, 0),
+		gf2d_color(0, 0, 0, 1),
+		gf2d_color(0, 0, 0, 0),
+		gf2d_color(0, 0, 0, 0),
+		NULL,
+		0,
+		0,
+		0,
+		"",
+		0,
+		0,
+		0,
+		0,
+		SDL_BLENDMODE_BLEND);
 
 
 
@@ -165,6 +189,7 @@ int main(int argc, char * argv[]) //display fire and water abilities
 			drawEntity(waterBall);
 			drawEntity(waterObs);
 			drawEntity(fireObs);
+			gf2d_particle_emitter_draw(pe, vector2d(0, 0));
 			player_update(player,space,fireObs,waterObs,door,enemy,music);
 			y_enemy_update(enemy);
 			tilemap_draw(map, vector2d(0, 0));
@@ -172,6 +197,7 @@ int main(int argc, char * argv[]) //display fire and water abilities
 			gf2d_space_update(space);
 			gui_draw_hud();
 			gf2d_space_draw(space, vector2d(0, 0));
+			gf2d_particle_emitter_update(pe);
 			//UI elements last
             gf2d_sprite_draw(
                 mouse,
@@ -196,8 +222,6 @@ int main(int argc, char * argv[]) //display fire and water abilities
 	Mix_FreeMusic(&collided_sound);
 	gf2d_space_free(space);
 	slog("---==== END ====---");
-	//levelTwo();
 	return 0;
 }
-
 /*eol@eof*/

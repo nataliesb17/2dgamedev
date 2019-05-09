@@ -5,6 +5,8 @@
 #include "gf2d_gui.h"
 #include "obstacles.h"
 #include "gf2d_audio.h"
+#include "particles.h"
+#include "gf2d_particles.h"
 
 void player_update(Entity *self, Space *space);
 
@@ -30,12 +32,14 @@ Entity *newPlayer(Vector2D position)
 	entity->hitbox.id = 0;
 	//entity->rigidBody.shape = &entity->hitbox;
 	//entity->update = player_update;
+
+
 	return entity;
 
 }
 
 
-void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstacle2,Entity *door, Entity *enemy, Mix_Music *music, Mix_Music *collided) {
+void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstacle2,Entity *door, Entity *enemy, Mix_Music *music, Mix_Music *collided, ParticleEmitter *pe) {
 	const Uint8 *keys;
 
 	keys = SDL_GetKeyboardState(NULL);
@@ -48,6 +52,8 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 	if (keys[SDL_SCANCODE_Z] && keys[SDL_SCANCODE_A] && self->ability == 2)self->velocity.x -= 4; //air dash left
 
 	vector2d_add(self->position, self->position, self->velocity);
+
+	//particle_trail(vector2d(self->position.x, self->position.y), vector2d(self->position.x + 20, self->position.y + 10), gf2d_color8(200, 200, 200, 200), pe);
 
 	self->hitbox.s.c.x = self->position.x + 20;
 	self->hitbox.s.c.y = self->position.y + 25;
