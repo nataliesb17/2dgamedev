@@ -16,6 +16,7 @@ typedef struct entities {
 	Shape hitbox; 
 	Body rigidBody;
 	Space *space;
+	Vector4D color;
 
 	float timer;
 	float current_frame;

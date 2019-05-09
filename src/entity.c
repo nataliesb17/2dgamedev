@@ -104,7 +104,7 @@ void drawEntity(Entity*entity) {
 		NULL,                     //scaleCenterPoint
 		NULL,                     //rotation
 		NULL,                     //flip
-		NULL,                     //colorShift
+		&entity->color,                     //colorShift
 		entity->current_frame);   //frames
 	if (&entity->hitbox)
 		gf2d_shape_draw(entity->hitbox, gf2d_color(255,0,255,255), vector2d(0,0));

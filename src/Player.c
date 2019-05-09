@@ -7,6 +7,7 @@
 #include "gf2d_audio.h"
 #include "particles.h"
 #include "gf2d_particles.h"
+#include "gf2d_color.h"
 
 void player_update(Entity *self, Space *space);
 
@@ -30,6 +31,7 @@ Entity *newPlayer(Vector2D position)
 	entity->onGround = 0;
 	entity->ability = 0;
 	entity->hitbox.id = 0;
+	entity->color = gf2d_color_to_vector4(gf2d_color(1, 1, 1, 1));
 	//entity->rigidBody.shape = &entity->hitbox;
 	//entity->update = player_update;
 
@@ -75,7 +77,8 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 				self->ability = 1;
 				Mix_PlayChannel(2, collided, 0);
 				slog("earth pickup detected %i",self->ability);
-				gui_setup_earth();
+				gui_setup_earth(); 
+				self->color = gf2d_color_to_vector4(gf2d_color(0, 1, 0, 1));
 			}
 			else if (staticHit.shape->ability == 2) {
 				self->ability = 2;
@@ -88,12 +91,14 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 				Mix_PlayChannel(2, collided, 0);
 				slog("fire pickup detected %i", self->ability);
 				gui_setup_fire();
+				self->color = gf2d_color_to_vector4(gf2d_color(1, 0, 0, 1));
 			}
 			else if (staticHit.shape->ability == 4) {
 				self->ability = 4;
 				Mix_PlayChannel(2, collided, 0);
 				slog("water pickup detected %i", self->ability);
 				gui_setup_water();
+				self->color = gf2d_color_to_vector4(gf2d_color(0, 0, 1, 1));
 			}
 		}
 		if (staticHit.shape->id == 3) { //if player touches an obstacle
