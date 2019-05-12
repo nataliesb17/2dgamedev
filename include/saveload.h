@@ -9,7 +9,8 @@ typedef struct Save{
 	Vector2D position;
 }SaveFiles;
 
-void Save_file(SaveFiles *save);
-void Load_file(SaveFiles *save);
+void save_file(SaveFiles *save, Entity *player);
+void read_file(SaveFiles *save);
+void load_file(SaveFiles *save, Entity *player);
 
 #endif

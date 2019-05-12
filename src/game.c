@@ -15,6 +15,7 @@
 #include "gf2d_particles.h"
 #include "gf2d_mouse.h"
 #include "gf2d_audio.h"
+#include "saveload.h"
 
 int main(int argc, char * argv[]) //display fire and water abilities
 {
@@ -29,6 +30,8 @@ int main(int argc, char * argv[]) //display fire and water abilities
 	Entity *waterBall;
 	Mix_Music *music;
 	Mix_Music *collided_sound;
+
+	SaveFiles save;
 
 	Entity *door; //level transition!
 
@@ -160,8 +163,6 @@ int main(int argc, char * argv[]) //display fire and water abilities
 		0,
 		SDL_BLENDMODE_BLEND);
 
-
-
     /*main game loop*/
     while(!done)
     {
@@ -213,7 +214,16 @@ int main(int argc, char * argv[]) //display fire and water abilities
         if (keys[SDL_SCANCODE_ESCAPE])done = 1; // exit condition
         //slog("Rendering at %f FPS",gf2d_graphics_get_frames_per_second());
 
+		if (keys[SDL_SCANCODE_B]) {
+			save_file(&save, player);
+			slog("player position saved");
+		}
 
+		if (keys[SDL_SCANCODE_N]) {
+			read_file(&save);
+			load_file(&save, player);
+			slog("player position loaded");
+		}
 
     }
 	//gf2d_particle_emitter_free(pe);
