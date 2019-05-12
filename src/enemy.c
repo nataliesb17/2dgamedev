@@ -50,6 +50,7 @@ Entity *newYEnemy(Vector2D position)
 	entity->timer = 0;
 	entity->hitbox.id = 4;
 	entity->rigidBody.shape = &entity->hitbox;
+	entity->color = gf2d_color_to_vector4(gf2d_color(1, 1, 1, 1));
 	return entity;
 
 }
@@ -72,6 +73,7 @@ Entity *newXEnemy(Vector2D position)
 	entity->update = x_enemy_update;
 	entity->timer = 0; 
 	entity->hitbox.id = 4;
+	entity->color = gf2d_color_to_vector4(gf2d_color(1, 1, 1, 1));
 	return entity;
 
 }

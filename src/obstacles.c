@@ -29,6 +29,7 @@ Entity *newEarthObstacle(Vector2D position)
 	entity->hitbox.ability = 1;
 	entity->hitbox.obstacle = 1;
 	entity->rigidBody.shape = &entity->hitbox;
+	entity->color = gf2d_color_to_vector4(gf2d_color(1, 1, 1, 1));
 	//entity->update = player_update;
 	return entity;
 
@@ -54,6 +55,7 @@ Entity *newFireObstacle(Vector2D position)
 	entity->hitbox.ability = 3;
 	entity->hitbox.obstacle = 3;
 	entity->rigidBody.shape = &entity->hitbox;
+	entity->color = gf2d_color_to_vector4(gf2d_color(1, 1, 1, 1));
 	//entity->update = player_update;
 	return entity;
 
@@ -79,6 +81,7 @@ Entity *newWaterObstacle(Vector2D position)
 	entity->hitbox.ability = 4;
 	entity->hitbox.obstacle = 4;
 	entity->rigidBody.shape = &entity->hitbox;
+	entity->color = gf2d_color_to_vector4(gf2d_color(1, 1, 1, 1));
 	//entity->update = player_update;
 	return entity;
 

@@ -7,6 +7,10 @@
 typedef struct Save{
 	Entity player;
 	Vector2D position;
+	Entity fireBall;
+	Entity waterBall;
+	Entity earthBall;
+	Entity airBall;
 }SaveFiles;
 
 void save_file(SaveFiles *save, Entity *player);

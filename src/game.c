@@ -76,7 +76,7 @@ int main(int argc, char * argv[]) //display fire and water abilities
     
     /*demo setup*/
     sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
-    //mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
+    mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
 	music = Mix_LoadWAV("music/8bitjump.wav");
 	collided_sound = Mix_LoadWAV("pickup.wav");
 	//Mix_PlayChannel(-1, music, 0);
@@ -194,6 +194,9 @@ int main(int argc, char * argv[]) //display fire and water abilities
 			player_update(player,space,fireObs,waterObs,door,enemy,music);
 			y_enemy_update(enemy);
 			tilemap_draw(map, vector2d(0, 0));
+
+			spawn_pickup(vector2d(mx, my));
+
 			//tilemap_draw_path(path, 2, map, vector2d(86, 24));
 			gf2d_space_update(space);
 			gui_draw_hud();
@@ -215,13 +218,13 @@ int main(int argc, char * argv[]) //display fire and water abilities
         //slog("Rendering at %f FPS",gf2d_graphics_get_frames_per_second());
 
 		if (keys[SDL_SCANCODE_B]) {
-			save_file(&save, player);
+			save_file(&save, player, fireBall);
 			slog("player position saved");
 		}
 
 		if (keys[SDL_SCANCODE_N]) {
 			read_file(&save);
-			load_file(&save, player);
+			load_file(&save, player, fireBall);
 			slog("player position loaded");
 		}
 
