@@ -115,6 +115,13 @@ void drawEntity(Entity*entity) {
 *@return - nothing
 */
 
+void drawAllEntities() {
+	int i;
+	for (i = 0; i < entityManager.maxEntities; i++) {
+		drawEntity(&entityManager.entity[i]);
+	}
+}
+
 void update(Entity*entity) {
 	if ((!entity) || (!entity->inUse))return;
 	entity->current_frame += 0.35;

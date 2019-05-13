@@ -182,14 +182,14 @@ int main(int argc, char * argv[]) //display fire and water abilities
             gf2d_sprite_draw_image(sprite,vector2d(0,0));
 
 			//gf2d_particle_emitter_draw(pe);
-
-			drawEntity(player);
-			drawEntity(enemy);
-			drawEntity(fireBall);
-			drawEntity(door);
-			drawEntity(waterBall);
-			drawEntity(waterObs);
-			drawEntity(fireObs);
+			drawAllEntities();
+			//drawEntity(player);
+			//drawEntity(enemy);
+			//drawEntity(fireBall);
+			//drawEntity(door);
+			//drawEntity(waterBall);
+			//drawEntity(waterObs);
+			//drawEntity(fireObs);
 			gf2d_particle_emitter_draw(pe, vector2d(0, 0));
 			player_update(player,space,fireObs,waterObs,door,enemy,music);
 			y_enemy_update(enemy);

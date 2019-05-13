@@ -122,7 +122,9 @@ void pickup_update(Entity *pickup, Space *entity) {
 
 void spawn_pickup(Vector2D position) {
 	if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-		drawEntity(newEarthpickup(position));
+		Entity *entity;
+		entity = newEarthpickup(position);
+		entity->hitbox.id = 2;
 		slog("pickup placed");
 	}
 }

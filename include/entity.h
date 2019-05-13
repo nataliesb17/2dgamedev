@@ -57,6 +57,8 @@ void drawEntity(Entity*entity);
 *@return - nothing
 */
 
+void drawAllEntities();
+
 void update(Entity *ent);
 /* Update for Animation
 *@brief - updates entity if animation is present
