@@ -46,7 +46,7 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 
 	keys = SDL_GetKeyboardState(NULL);
 
-	if (keys[SDL_SCANCODE_W])self->velocity.y -= 7 && Mix_PlayChannel(-1, music, 0); //up
+	if (keys[SDL_SCANCODE_W])self->velocity.y -= 2; //Mix_PlayChannel(-1, music, 0); //up
 	if (keys[SDL_SCANCODE_A])self->velocity.x -= .75; //left
 	if (keys[SDL_SCANCODE_S] && self->onGround == 0)self->velocity.y += .75; //down, doesn't work if on ground
 	if (keys[SDL_SCANCODE_D])self->velocity.x += .75; //right

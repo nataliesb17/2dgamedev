@@ -77,9 +77,10 @@ int main(int argc, char * argv[]) //display fire and water abilities
     /*demo setup*/
     sprite = gf2d_sprite_load_image("images/backgrounds/bg_forest.png");
     mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
-	music = Mix_LoadWAV("music/8bitjump.wav");
+	music = Mix_LoadWAV("music/background.wav");
 	collided_sound = Mix_LoadWAV("pickup.wav");
-	//Mix_PlayChannel(-1, music, 0);
+	Mix_VolumeMusic(2);
+	Mix_PlayChannel(-1, music, -1);
 
 	//player
 	player = newPlayer(vector2d(0, 0), player);
@@ -181,15 +182,7 @@ int main(int argc, char * argv[]) //display fire and water abilities
             //backgrounds drawn first
             gf2d_sprite_draw_image(sprite,vector2d(0,0));
 
-			//gf2d_particle_emitter_draw(pe);
 			drawAllEntities();
-			//drawEntity(player);
-			//drawEntity(enemy);
-			//drawEntity(fireBall);
-			//drawEntity(door);
-			//drawEntity(waterBall);
-			//drawEntity(waterObs);
-			//drawEntity(fireObs);
 			gf2d_particle_emitter_draw(pe, vector2d(0, 0));
 			player_update(player,space,fireObs,waterObs,door,enemy,music);
 			y_enemy_update(enemy);
