@@ -4,6 +4,7 @@
 #include "gf2d_sprite.h"
 #include "gf2d_shape.h"
 #include "collision.h"
+#include "gf2d_particles.h"
 
 typedef struct entities {
 

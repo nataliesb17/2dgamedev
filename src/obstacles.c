@@ -48,7 +48,7 @@ Entity *newFireObstacle(Vector2D position)
 	}
 	vector2d_copy(entity->position, position);
 
-	entity->sprite = gf2d_sprite_load_all("images/leaf.png", 100, 87, 1);
+	entity->sprite = gf2d_sprite_load_all("images/leaff.png", 100, 87, 1);
 	entity->frame_num = 1;
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 100, 87);
 	entity->hitbox.id = 3;
@@ -101,7 +101,10 @@ Entity *newDoor(Vector2D position) {
 
 	entity->sprite = gf2d_sprite_load_all("images/door.png", 32, 32, 1);
 	entity->frame_num = 1;
-	entity->hitbox.id = 4;
+	entity->hitbox.id = 5;
+	entity->hitbox.ability = 5;
+	entity->rigidBody.shape = &entity->hitbox;
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 32, 32);
+	entity->color = gf2d_color_to_vector4(gf2d_color(1, 1, 1, 1));
 	return entity;
 }

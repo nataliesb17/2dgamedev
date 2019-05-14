@@ -11,12 +11,11 @@
 
 void player_update(Entity *self, Space *space);
 
-
 Entity *newPlayer(Vector2D position)
 {
 	Entity *entity = NULL;
 	int i;
-
+	
 	entity = ent_new();
 
 	if (!entity) {
@@ -35,13 +34,12 @@ Entity *newPlayer(Vector2D position)
 	//entity->rigidBody.shape = &entity->hitbox;
 	//entity->update = player_update;
 
-
 	return entity;
 
 }
 
 
-void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstacle2,Entity *door, Entity *enemy, Mix_Music *music, Mix_Music *collided, ParticleEmitter *pe) {
+void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstacle2, Entity *obstacle3, Entity *enemy, Mix_Music *music, int Level) {
 	const Uint8 *keys;
 
 	keys = SDL_GetKeyboardState(NULL);
@@ -55,8 +53,6 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 
 	vector2d_add(self->position, self->position, self->velocity);
 
-	//particle_trail(vector2d(self->position.x, self->position.y), vector2d(self->position.x + 20, self->position.y + 10), gf2d_color8(200, 200, 200, 200), pe);
-
 	self->hitbox.s.c.x = self->position.x + 20;
 	self->hitbox.s.c.y = self->position.y + 25;
 
@@ -64,10 +60,6 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 
 	Collision staticHit = gf2d_space_shape_test(space, self->hitbox);
 	if (staticHit.collided >= 1) {
-		if (door->hitbox.id == 4) {
-			slog("id detected");
-			//levelTwo();
-		}
 		if (staticHit.shape->id == 4) {
 			destroyEntity(enemy);
 			slog("enemy detected");
@@ -75,27 +67,23 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 		if (staticHit.shape->id == 2) {
 			if (staticHit.shape->ability == 1) {
 				self->ability = 1;
-				Mix_PlayChannel(2, collided, 0);
 				slog("earth pickup detected %i",self->ability);
 				gui_setup_earth(); 
 				self->color = gf2d_color_to_vector4(gf2d_color(0, 1, 0, 1));
 			}
 			else if (staticHit.shape->ability == 2) {
 				self->ability = 2;
-				Mix_PlayChannel(2, collided, 0);
 				slog("air pickup detected %i", self->ability);
 				gui_setup_air();
 			}
 			else if (staticHit.shape->ability == 3) {
 				self->ability = 3;
-				Mix_PlayChannel(2, collided, 0);
 				slog("fire pickup detected %i", self->ability);
 				gui_setup_fire();
 				self->color = gf2d_color_to_vector4(gf2d_color(1, 0, 0, 1));
 			}
 			else if (staticHit.shape->ability == 4) {
 				self->ability = 4;
-				Mix_PlayChannel(2, collided, 0);
 				slog("water pickup detected %i", self->ability);
 				gui_setup_water();
 				self->color = gf2d_color_to_vector4(gf2d_color(0, 0, 1, 1));
@@ -106,7 +94,7 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 				if (self->ability == 1) {
 					slog("earth obstacle detected");
 					gf2d_space_remove_body(space, &obstacle1->rigidBody);
-					destroyEntity(obstacle1);
+					destroyEntity(obstacle3);
 				}
 				else {
 					slog("can not be destroyed with current ability");
