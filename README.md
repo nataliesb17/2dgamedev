@@ -18,7 +18,7 @@ W - UP<br>
 A - LEFT<br>
 S - DOWN<br>
 D - RIGHT<br>
-Z - AIR DASH<br>
+SHIFT - AIR DASH<br>
 ESC - SWITCH LEVELS/EXIT GAME <br>
 B - SAVE GAME<br>
 N - LOAD GAME<br>

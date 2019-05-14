@@ -48,8 +48,8 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 	if (keys[SDL_SCANCODE_A])self->velocity.x -= .75; //left
 	if (keys[SDL_SCANCODE_S] && self->onGround == 0)self->velocity.y += .75; //down, doesn't work if on ground
 	if (keys[SDL_SCANCODE_D])self->velocity.x += .75; //right
-	if (keys[SDL_SCANCODE_Z] && keys[SDL_SCANCODE_D] && self->ability == 2)self->velocity.x += 4; //air dash right
-	if (keys[SDL_SCANCODE_Z] && keys[SDL_SCANCODE_A] && self->ability == 2)self->velocity.x -= 4; //air dash left
+	if (keys[SDL_SCANCODE_LSHIFT] && keys[SDL_SCANCODE_D] && self->ability == 2)self->velocity.x += 4; //air dash right
+	if (keys[SDL_SCANCODE_LSHIFT] && keys[SDL_SCANCODE_A] && self->ability == 2)self->velocity.x -= 4; //air dash left
 
 	vector2d_add(self->position, self->position, self->velocity);
 
