@@ -48,7 +48,7 @@ Entity *newFireObstacle(Vector2D position)
 	}
 	vector2d_copy(entity->position, position);
 
-	entity->sprite = gf2d_sprite_load_all("images/leaff.png", 100, 87, 1);
+	entity->sprite = gf2d_sprite_load_all("images/leaf.png", 100, 87, 1);
 	entity->frame_num = 1;
 	entity->hitbox = gf2d_shape_rect(position.x, position.y, 100, 87);
 	entity->hitbox.id = 3;

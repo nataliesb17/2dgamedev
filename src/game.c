@@ -149,15 +149,21 @@ int level(int Level) {
 
 	//LEVEL THREE
 	if (Level == 3) {
-
+		enemy = newYEnemy(vector2d(1000,1000), enemy);
+		earthBall = newEarthpickup(vector2d(132, 150));
+		earthObs = newEarthObstacle(vector2d(280, 345));
+		gf2d_space_add_static_shape(space, earthObs->hitbox);
+		gf2d_space_add_static_shape(space, earthBall->hitbox);
 		map = tilemap_load("levels/tilemap3.map");
+
+		gf2d_space_add_static_shape(space, gf2d_shape_rect(3, 390, 650, 26));
 	}
 
 	////LEVEL FOUR
-	//if (Level == 4) {
-
-	//	map = tilemap_load("levels/tilemap4.map");
-	//}
+	if (Level == 4) {
+		enemy = newYEnemy(vector2d(1000,1000), enemy);
+		map = tilemap_load("levels/tilemap4.map");
+	}
 
 	gui_set_health(playerHealth); //set health here
 

@@ -93,7 +93,7 @@ void player_update(Entity *self, Space *space, Entity *obstacle1, Entity *obstac
 			if (staticHit.shape->obstacle == 1) { //if obstacle gets destroyed by earth ability
 				if (self->ability == 1) {
 					slog("earth obstacle detected");
-					gf2d_space_remove_body(space, &obstacle1->rigidBody);
+					gf2d_space_remove_body(space, &obstacle3->rigidBody);
 					destroyEntity(obstacle3);
 				}
 				else {
