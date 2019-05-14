@@ -3,22 +3,23 @@
    Deliverables
 ｡☆✼★━━━━━━━━━━━━★✼☆｡
 
-Sound Effects
+Sound Effects ☑
 Particle System
-Four Levels
-Coherent Assets
-Content Editor
-☑			        
+Four Levels ☑
+Coherent Assets ☑
+Content Editor ☑
+			        
 
 
 
 # Controls
 
-W - UP
-A - LEFT
+W - UP<br>
+A - LEFT<br>
 S - DOWN
 D - RIGHT
 Z - AIR DASH
-ESC - LEVEL TWO
-ESC TWICE - EXIT GAME
+ESC - SWITCH LEVELS/EXIT GAME 
+B - SAVE GAME
+N - LOAD GAME
 
